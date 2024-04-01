@@ -1,9 +1,7 @@
 
-
-
 class Shape{
-    private String color;
-    private boolean filled;
+    protected String color;
+    protected boolean filled;
     public Shape(){
         this.color = "red";
         this.filled = true;
@@ -56,8 +54,8 @@ class Circle extends Shape{
 }
 
 class Rectangle extends Shape{
-    private double width;
-    private double length;
+    protected double width;
+    protected double length;
     public Rectangle(){
         super();
         this.width = 1.0;
@@ -108,16 +106,16 @@ class Square extends Rectangle{
     }
     @Override
     public void setWidth(double width){
-        super.setWidth(width);
+        super.width = width;
     }
     @Override
     public void setLength(double length){
-        super.setLength(length);
+        super.length = length;
     }
 
     @Override
     public String toString() {
-        return "Square [color=" + super.getColor() + ", filled=" + super.isFilled() + ", side=" + getSide() + ", area=" + getArea() + ", perimeter=" + getPerimeter() + "]";
+        return "Square [color=" + color + ", filled=" + filled + ", side=" + getSide() + ", area=" + getArea() + ", perimeter=" + getPerimeter() + "]";
     }
 }
 
@@ -125,6 +123,19 @@ class Square extends Rectangle{
 
 public class Exercise4 {
     public static void main(String[] args) {
+
+        // Circle c1  = new Circle("dark",false,10);
+        // System.out.println(c1);
+        Rectangle r1 = new Rectangle("blue", true, 10,20);
+        System.out.println(r1);
+        System.out.println(r1.getArea());
+        Square s1 = new Square("green",false,1000);
+        System.out.println(s1.getArea());
+        s1.setSide(333);
+        s1.setLength(20);
+        s1.setWidth(320);
         
+        System.out.println(r1);
+        // System.out.println(s1.width);
     }
 }

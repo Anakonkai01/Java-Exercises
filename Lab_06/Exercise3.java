@@ -1,8 +1,8 @@
 
 
 class Point2D{
-    private float x;
-    private float y;
+    protected float x;
+    protected float y;
     public Point2D(){
         this.x = 0.0f;
         this.y = 0.0f;
@@ -60,6 +60,9 @@ class Point3D extends Point2D{
         super.setXY(x,y);
         this.z = z;
     }
+    public float[] getXYZ() {
+        return new float[]{super.getX(),super.getY(),z};
+    }
     @Override
     public String toString() {
         return "Point3D [x=" + super.getX() + ", y=" + super.getY() + ", z=" + z + "]";
@@ -70,6 +73,15 @@ class Point3D extends Point2D{
 
 public class Exercise3 {
     public static void main(String[] args) {
-
+        Point3D p3 = new Point3D();
+        System.out.println(p3);
+        p3.setZ(10);
+        System.out.println(p3);
+        p3.setXYZ(10, 20, 30);
+        System.out.println(p3);
+        // float point = p3.getXYZ();
+        for(float i : p3.getXYZ()){
+            System.out.println(i);
+        }
     }
 }
