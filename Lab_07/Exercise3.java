@@ -45,7 +45,7 @@ class MoveablePoint implements IMovable{
 }
 
 
-class MoveableCircle extends MoveablePoint{
+class MoveableCircle extends MoveablePoint implements IMovable{
     int radius;
     MoveablePoint center;
     public MoveableCircle(int x, int y, int xSpeed, int ySpeed, int radius){
