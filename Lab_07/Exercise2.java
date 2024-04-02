@@ -32,11 +32,7 @@ abstract class Shape{
         if(this.getClass() != obj.getClass()) return false;
 
         Shape other = (Shape) obj;
-        if(color == null){
-            if(other.color != null) return false;
-        }
-        else if(!(color.equals(other.color))) return false;
-        if(filled != other.filled) return false;
+        if((getArea() != other.getArea())) return false;
         return true;
     }
     
@@ -57,7 +53,7 @@ class Circle extends Shape{
     public Circle(double radius){
         this.radius = radius;
     }
-    public Circle(String color, boolean filled, double radius){
+    public Circle(double radius,String color, boolean filled){
         super(color,filled);
         this.radius = radius;
 
@@ -93,7 +89,7 @@ class Rectangle extends Shape{
     public Rectangle(){
 
     }
-    public Rectangle(String color, boolean filled, double witdh, double length) {
+    public Rectangle(double witdh, double length, String color, boolean filled) {
         super(color, filled);
         this.witdh = witdh;
         this.length = length;
@@ -134,7 +130,7 @@ class Square extends Rectangle{
 
     }
     public Square(double side,String color,boolean filled){
-        super(color,filled,side,side);
+        super(side,side,color,filled);
     }
 
     // getter and setter
@@ -157,6 +153,24 @@ class Square extends Rectangle{
 }
 public class Exercise2 {
     public static void main(String[] args) {
+        Shape[] shapes = new Shape[5];
+        shapes[0] = new Circle(4, "Red", true);
+        shapes[1] = new Circle(4, "Blue", false);
+        shapes[2] = new Square(10, "Black", true);
+        shapes[3] = new Circle(9);
+        shapes[4] = new Rectangle(12, 8, "Blue", true);
         
+        for(Shape s : shapes){
+            System.out.println(s.getArea());
+        }
+
+        double max = shapes[0].getArea();
+        for(Shape s : shapes){
+            if(max < s.getArea()){
+                max = s.getArea();
+            }
+        }
+        System.out.println(max);
+        System.out.println(shapes[0].equals(shapes[1]));
     }
 }
