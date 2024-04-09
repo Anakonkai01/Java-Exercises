@@ -1,2 +1,5 @@
-package Bai1;public interface Enrollable {
+package Bai1;
+
+public interface Enrollable {
+    public void enrol();
 }
