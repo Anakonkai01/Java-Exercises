@@ -34,9 +34,9 @@ public class MathStudent extends Student{
     @Override
     public String toString() {
         return "MathStudent{" +
-                "Name = " + getsName()+
-                " - sID = '" + sID + '\'' +
-                " - Gpa= " + getGpa()+
+                "Name=" + getsName()+
+                "Gpa=" + getGpa()+
+                "sID='" + sID + '\'' +
                 '}';
     }
 }

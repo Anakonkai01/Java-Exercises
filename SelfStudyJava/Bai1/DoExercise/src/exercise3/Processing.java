@@ -1,8 +1,8 @@
 package exercise3;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+
+import java.io.*;
+import java.util.*;
 
 public class Processing {
     public ArrayList<Student> findStudent(ArrayList<Student> lstStu){
@@ -17,14 +17,19 @@ public class Processing {
 
     public static <E> boolean writeFile(String path, ArrayList<E> lst){
         try{
-            PrintWriter w = new PrintWriter(path);
-            Processing p1 = new Processing();
-
-            for(Student eliteStudent : p1.findStudent(listStudent)){
-                w.println(eliteStudent);
+            PrintWriter writer = new PrintWriter(new FileWriter(path));
+            for(int i = 0; i < lst.size(); i++){
+                E data = lst.get(i);
+                writer.print(data);
+                if((i < lst.size() - 1)){
+                    writer.println();
+                }
             }
+            writer.close();
             return true;
-        }catch(IOException e){
+        }
+        catch (IOException e){
+            e.printStackTrace();
             return false;
         }
     }
@@ -36,8 +41,9 @@ public class Processing {
         listStudent.add(new MathStudent("Thai",6.7,"523H0132"));
         listStudent.add(new ITStudent("Nguyen Van A",7.1,43211));
         listStudent.add(new MathStudent("Nguyen Van B",1.7,"123H1234"));
-        
-        if(  writeFile("output.txt", listStudent)) {
+
+        Processing p = new Processing();
+        if(writeFile("output.txt", p.findStudent(listStudent))) {
             System.out.println("Success!");
         }
         else{

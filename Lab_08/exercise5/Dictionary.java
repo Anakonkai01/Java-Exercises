@@ -1,9 +1,8 @@
 package exercise5;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
-public class Exercise5 {
+public class Dictionary {
 
     public static boolean checkWordExist(HashMap<String,String> dictionary,String word){
         return dictionary.containsKey(word);
@@ -28,10 +27,13 @@ public class Exercise5 {
         dictionary.put("drink","Uống");
 
         System.out.println("Enter a word:");
-        Scanner scanner = new Scanner(System.in);
-        String word = scanner.nextLine();
-
+        String word = "hello";
         System.out.println(meaningOfWord(dictionary,word));
-
+        System.out.println("Enter a word:");
+        word = "goodbye";
+        System.out.println(meaningOfWord(dictionary,word));
+        System.out.println("Enter a word:");
+        word = "morning";
+        System.out.println(meaningOfWord(dictionary, word));
     }
 }

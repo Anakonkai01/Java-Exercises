@@ -16,15 +16,14 @@ public class Exercise4 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the size of Vector:");
-        int n = scanner.nextInt();
+        int n = 5;
         Vector<Integer> X = new Vector<>(n);
         System.out.println("Enter the values of X:");
         for (int i = 0; i < n; i++) {
-            System.out.print("X[" + i + "]: ");
-            int value = scanner.nextInt();
+            int value = i+1;
             X.add(value);
         }
-
+        scanner.close();
         Vector<Long> Y = calculateFx(X);
         System.out.println("Values of F(x): " + Y);
         }

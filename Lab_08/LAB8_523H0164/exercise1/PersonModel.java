@@ -17,10 +17,8 @@ public class PersonModel <T>{
 
     public static void main(String[] args) {
         PersonModel<Student> pm1 = new PersonModel<>();
-        Student st1 = new Student("Dung",19,"1111111",10);
         pm1.add(new Student("Nhan",18,"523H0164",9.37));
         pm1.add(new Student("Thai",20,"29199999",8.2));
-        pm1.add(st1);
         pm1.display();
 
         PersonModel<Employee> pm2 = new PersonModel<>();
