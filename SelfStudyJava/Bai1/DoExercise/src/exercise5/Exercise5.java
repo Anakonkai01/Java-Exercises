@@ -19,8 +19,8 @@ public class Exercise5 {
             int sum = 0;
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                String [] arr = (line.split("\\s+"));
-                for(String s: arr){
+                String[] arr = (line.split("\\s+"));
+                for (String s : arr) {
                     sum += Integer.parseInt(s);
                 }
             }

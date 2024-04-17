@@ -49,7 +49,6 @@ class Manager extends Employee{
     public double getSalary(){
         return getBasicSalary()*getCoefficientsSalary()*getCoefficientsEmulation() + getSenioritySalary() + bonusByPosition();
     }
-    
 }
 
 

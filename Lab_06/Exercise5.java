@@ -91,7 +91,6 @@ class Employee{
     }
 
     public double getSalary(){
-        
         return basicSalary*coefficientsSalary*getCoefficientsEmulation()+getSenioritySalary();
     }
     @Override

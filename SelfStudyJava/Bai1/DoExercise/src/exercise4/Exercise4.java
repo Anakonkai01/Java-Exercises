@@ -1,60 +1,90 @@
 package exercise4;
-import java.io.IOException;
-import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+
+import java.io.*;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Exercise4 {
-public static void main(String[] args) {
-        String folderPath = "C:\\Users\\nguye\\OneDrive\\Desktop"; // Thay đổi đường dẫn này thành đường dẫn thư mục bạn muốn phân chia
+    public static List<File> filesExtension(String path, String extensionName) {
+        File folder = new File(path);
+        if (!folder.exists()) {
+            return null;
+        }
+        File[] files = folder.listFiles();
+        List<File> filesContainsExtension = new ArrayList<>();
 
-        try {
-            // Tạo đối tượng Path từ đường dẫn thư mục
-            Path directory = Paths.get(folderPath);
-
-            // Tạo một map để lưu trữ tệp theo phần mở rộng của chúng
-            Map<String, List<Path>> filesByExtension = new HashMap<>();
-
-            // Lấy danh sách tất cả các tệp trong thư mục
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
-                for (Path file : stream) {
-                    if (Files.isRegularFile(file)) {
-                        // Lấy phần mở rộng của tệp
-                        String extension = getFileExtension(file);
-
-                        // Kiểm tra xem có danh sách nào đã được tạo cho phần mở rộng này chưa
-                        if (!filesByExtension.containsKey(extension)) {
-                            filesByExtension.put(extension, new ArrayList<>());
-                        }
-
-                        // Thêm tệp vào danh sách tương ứng
-                        filesByExtension.get(extension).add(file);
-                    }
+        if (files != null) {
+            for (File f : files) {
+                if (f.getName().contains(extensionName)) {
+                    filesContainsExtension.add(f);
                 }
             }
+        }
 
-            // Hiển thị các tệp theo phần mở rộng của chúng
-            for (Map.Entry<String, List<Path>> entry : filesByExtension.entrySet()) {
-                System.out.println("Files with extension ." + entry.getKey() + ":");
-                for (Path file : entry.getValue()) {
-                    System.out.println(file.getFileName());
-                }
-                System.out.println("-----------------------------");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        return filesContainsExtension;
+    }
+
+    public static boolean checkExist(String path) {
+        File file = new File(path);
+        return file.exists();
+    }
+
+    public static String checkFileOrDirectory(String path) {
+        File file = new File(path);
+        if (file.isDirectory()) {
+            return (file.getName() + " is a directory");
+        } else if (file.isFile()) {
+            return (file.getName() + " is a file");
+        } else {
+            return (file.getName() + " does not exist.");
         }
     }
 
-    // Phương thức này trích xuất phần mở rộng từ đường dẫn tệp
-    private static String getFileExtension(Path path) {
-        String fileName = path.getFileName().toString();
-        int index = fileName.lastIndexOf('.');
-        if (index > 0) {
-            return fileName.substring(index + 1);
+
+    public static void appendText(File file, String text) {
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter(file, true));
+            writer.append(text);
+            writer.close();
+        } catch (IOException e) {
+            System.err.println("Cannot append" + e.getMessage());
         }
-        return "";
+    }
+
+    public static String longestWord(File file) {
+        Map<String,Integer> mapWordCount = new HashMap<>();
+
+        try {
+            Scanner scanner = new Scanner(new FileReader(file));
+            while(scanner.hasNext()){
+                String line = scanner.nextLine();
+                Matcher matcher = Pattern.compile("\\b[a-zA-Z]+\\b").matcher(line);
+                while (matcher.find()) {
+                    String word = matcher.group();
+                    mapWordCount.put(word, word.length());
+                }
+            }
+            System.out.println(mapWordCount);
+            String longestWord = "";
+            int maxLength = 0;
+            for(Map.Entry<String, Integer> entry : mapWordCount.entrySet()){
+                if(entry.getValue() > maxLength) {
+                    longestWord = entry.getKey();
+                    maxLength = entry.getValue();
+                }
+            }
+            return longestWord; // if there are more word which have the same length so we need return the list of word right ???
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static void main(String[] args) {
+        String path = "C:\\Users\\nguye\\OneDrive\\Desktop\\test.txt";
+        File file = new File(path);
+        System.out.println(longestWord(file));
     }
 }
