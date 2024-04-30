@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Exercise5 {
     public static void main(String[] args) {
+        // test input
         try {
             PrintWriter pw = new PrintWriter(new FileWriter("input.txt"));
             pw.print("0 12 8 4\n6 100 1 9");
@@ -13,9 +14,9 @@ public class Exercise5 {
             throw new RuntimeException(e);
         }
 
-        Scanner sc = null;
+        // implement the task
         try {
-            sc = new Scanner(new File("input.txt"));
+            Scanner sc = new Scanner(new File("input.txt"));
             int sum = 0;
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();

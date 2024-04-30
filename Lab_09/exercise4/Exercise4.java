@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Exercise4 {
+    // task 1
     public static List<File> filesExtension(String path, String extensionName) {
         File folder = new File(path);
         if (!folder.exists()) {
@@ -26,11 +27,13 @@ public class Exercise4 {
         return filesContainsExtension;
     }
 
+    // task 2
     public static boolean checkExist(String path) {
         File file = new File(path);
         return file.exists();
     }
 
+    // task 3
     public static String checkFileOrDirectory(String path) {
         File file = new File(path);
         if (file.isDirectory()) {
@@ -42,49 +45,88 @@ public class Exercise4 {
         }
     }
 
-
-    public static void appendText(File file, String text) {
-        try {
-            PrintWriter writer = new PrintWriter(new FileWriter(file, true));
-            writer.append(text);
-            writer.close();
-        } catch (IOException e) {
-            System.err.println("Cannot append" + e.getMessage());
-        }
+    // task 4
+    public static void appendText(String path, String text) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(path, true));
+        writer.append(text);
+        writer.close();
     }
 
-    public static String longestWord(File file) {
+    // task 5
+    public static String longestWord(String path) throws IOException {
         Map<String,Integer> mapWordCount = new HashMap<>();
 
-        try {
-            Scanner scanner = new Scanner(new FileReader(file));
-            while(scanner.hasNext()){
-                String line = scanner.nextLine();
-                Matcher matcher = Pattern.compile("\\b[a-zA-Z]+\\b").matcher(line);
-                while (matcher.find()) {
-                    String word = matcher.group();
-                    mapWordCount.put(word, word.length());
-                }
+        BufferedReader reader = new BufferedReader(new FileReader(path));
+        String line;
+        while((line = reader.readLine()) != null){
+            Matcher matcher = Pattern.compile("\\b[a-zA-Z]+\\b").matcher(line);
+            while (matcher.find()) {
+                String word = matcher.group();
+                mapWordCount.put(word, word.length());
             }
-            System.out.println(mapWordCount);
-            String longestWord = "";
-            int maxLength = 0;
-            for(Map.Entry<String, Integer> entry : mapWordCount.entrySet()){
-                if(entry.getValue() > maxLength) {
-                    longestWord = entry.getKey();
-                    maxLength = entry.getValue();
-                }
-            }
-            return longestWord; // if there are more word which have the same length so we need return the list of word right ???
-        } catch (IOException e) {
-            System.err.println("Error: " + e.getMessage());
-            return null;
         }
+        reader.close();
+        String longestWord = "";
+        int maxLength = 0;
+        for(Map.Entry<String, Integer> entry : mapWordCount.entrySet()){
+            if(entry.getValue() > maxLength) {
+                longestWord = entry.getKey();
+                maxLength = entry.getValue();
+            }
+        }
+
+        return longestWord; // if there are more word which have the same length so we need return the list of word right ???
     }
 
     public static void main(String[] args) {
-        String path = "C:\\Users\\nguye\\OneDrive\\Desktop\\test.txt";
-        File file = new File(path);
-        System.out.println(longestWord(file));
+        String inputPath;
+        
+        // task 1
+        System.out.println("Task 1:");
+        inputPath = "test/task1";
+        String extension = "txt";
+        for (File file : filesExtension(inputPath, extension)) {
+            System.out.println("File " + file);
+        }
+
+        // task 2
+        System.out.println();
+        System.out.println("Task 2:");
+        inputPath = "test/task2/test1.cpp";
+        System.out.println(inputPath+" is exists: "+checkExist(inputPath));
+
+        // task 3
+        System.out.println();
+        System.out.println("Task 3:");
+        inputPath = "test/task3/test1.cpp";
+        System.out.println(inputPath+":  "+checkFileOrDirectory(inputPath));
+        inputPath = "test/task3/test2.txt";
+        System.out.println(inputPath+":  "+checkFileOrDirectory(inputPath));
+        inputPath = "test/task3";
+        System.out.println(inputPath+":  "+checkFileOrDirectory(inputPath));
+
+        // task 4
+        System.out.println();
+        System.out.println("Task 4:");
+        inputPath = "test/task4/test.txt";
+        String appendString = ", nice too meet you";
+        try{
+            appendText(inputPath, appendString);
+            System.out.println("Append successfully");
+        }
+        catch (IOException e){
+            System.err.println("Error: "+e.getMessage());
+        }
+
+        // task 5
+        System.out.println();
+        System.out.println("Task 5:");
+        inputPath = "test/task5/test.txt";
+        try{
+            System.out.println("Longest Word in file '"+inputPath+"' is: "+longestWord(inputPath));
+        }
+        catch (IOException e){
+            System.err.println("Error: "+e.getMessage());
+        }
     }
 }

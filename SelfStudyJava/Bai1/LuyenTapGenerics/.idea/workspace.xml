@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aae2941b-dd8a-4848-b35b-843b3a481965" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Box.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Pair.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Stack.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exercise1/TestFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exercise1/testException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Lab_08/exercise1/PersonModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Lab_08/exercise1/PersonModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Lab_08/exercise4/Exercise4.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Lab_08/exercise4/Exercise4.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Lab_08/exercise5/Exercise5.java" beforeDir="false" />
-    </list>
+    <list default="true" id="aae2941b-dd8a-4848-b35b-843b3a481965" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,6 +46,21 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="LuyenTapGenerics" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="LuyenTapGenerics" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -76,6 +82,7 @@
       <workItem from="1713327838414" duration="5831000" />
       <workItem from="1713333866189" duration="1178000" />
       <workItem from="1713335898165" duration="379000" />
+      <workItem from="1713490793430" duration="73000" />
     </task>
     <servers />
   </component>

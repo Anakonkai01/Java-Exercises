@@ -59,7 +59,7 @@ public class Student {
 
     public static void main(String[] args) {
         Student st1 = new Student("Nhan","Quan 8","Nam",10);
-        Student st2 = new Student("Thai","Quan 7","Nu",9);
+        Student st2 = new Student("Thai","Quan 7","Nu",6);
         StudentOperator operator = new StudentOperator();
         operator.print(st1);
         operator.print(st2);
