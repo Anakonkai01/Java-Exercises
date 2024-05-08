@@ -1,0 +1,2 @@
+Homestay [1, Cozy Homestay, 123 Main St, 4.800000, City A]
+Homestay [6, Green Garden Homestay, 543 Park Ln, 4.000000, City F]

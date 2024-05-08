@@ -1,0 +1,3 @@
+Villa [4, Mountain Villa, 101 Forest Rd, City D, true, true, true, false, 20, 330]
+Villa [16, Riverfront Retreat, 789 Riverside Dr, City P, true, true, true, true, 20, 430]
+CruiseShip [20, Tropical Oasis CruiseShip, 210 Palm Tree Ln, City T, true, true, true, true, false]
