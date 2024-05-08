@@ -1,1 +1,5 @@
 tai sao atr 7 lai vi trung nhau o Resort va Hotel rating stars
+
+
+#req2 
+khi kiểm tra commonaccommodate thì maximum số người xét riêng từng phòng hay tổng tất cả các phòng ???
