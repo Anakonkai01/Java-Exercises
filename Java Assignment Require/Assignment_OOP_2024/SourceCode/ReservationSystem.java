@@ -21,9 +21,9 @@ public class ReservationSystem {
     public ArrayList<Accommodation> loadAccommodations(String accPath, String roomPath, String roomOfAccPath) {
         ArrayList<Accommodation> acc = new ArrayList<>();
         try{
-            BufferedReader reader = new BufferedReader(new FileReader(accPath));
+            BufferedReader reader1 = new BufferedReader(new FileReader(accPath));
             String line;
-            while((line = reader.readLine()) != null){
+            while((line = reader1.readLine()) != null){
                 String[] parts = line.split(",");
                 int numberArgument = parts.length; 
                 switch(numberArgument) {
@@ -52,13 +52,91 @@ public class ReservationSystem {
                         boolean convertYesNo_Bar = parts[8].equals("yes");
                         acc.add(new CruiseShip(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], convertYesNo_pool, convertYesNo_Drink, convertYesNo_Breakfast, convertYesNo_Gym,Integer.parseInt(parts[9]), Integer.parseInt(parts[10]),convertYesNo_Bar));
                         break;
+                    default:
+                        System.out.println("Error Req1: Wrong number of arguments");
+                        break;
                 }
             }
-            reader.close();
+            reader1.close();
         }
         catch(IOException e){
-            System.out.println("Error Req1: " + e.getMessage());
+            System.out.println("Error reader1 Req1: " + e.getMessage());
         }
+
+        // add room
+        ArrayList<Room> rooms = new ArrayList<>(); 
+        try{
+            BufferedReader reader2 = new BufferedReader(new FileReader(roomPath));
+            String line;
+            while ((line = reader2.readLine()) != null) {
+                String[] parts = line.split(","); 
+                rooms.add(new Room(Integer.parseInt(parts[0]), parts[1], Integer.parseInt(parts[2]),
+                                    parts[3], Integer.parseInt(parts[4]), Integer.parseInt(parts[5]),
+                                    Double.parseDouble(parts[6]), Double.parseDouble(parts[7])));
+            }
+            reader2.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // add room of accommodation
+        try{
+            BufferedReader reader3 = new BufferedReader(new FileReader(roomOfAccPath));
+            String line;
+
+            HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
+
+            while((line = reader3.readLine()) != null){
+                String[] parts = line.split(",");
+
+                int key = Integer.parseInt(parts[0]);
+                int value = Integer.parseInt(parts[1]);
+
+                if (map.containsKey(key)) {
+                    map.get(key).add(value);
+                } else {
+                    ArrayList<Integer> list = new ArrayList<>();
+                    list.add(value);
+                    map.put(key, list);
+                }
+            }
+            reader3.close();
+            for (Integer key : map.keySet()) {
+                ArrayList<Room> tempRoom = new ArrayList<>();
+                System.out.println("Key: " + key + ", Values: " + map.get(key));
+                for(Accommodation a : acc){
+                    if(a.getID_Accommodation() == key){
+                        for(Integer value : map.get(key)){
+                            for(Room r : rooms){
+                                if(r.getID_Room() == value){
+                                    tempRoom.add(r);
+                                }
+                            }
+                        }
+                        CommonAccommodation b = (CommonAccommodation) a;
+                        b.setRooms(tempRoom);
+                    }
+                }
+            }
+
+            // test
+            for(Accommodation a : acc){
+                System.out.println(a.getID_Accommodation() + " " + a.getName_Accommodation() + " " + a.getAddress_Accommodation() + " " + a.getCity_Accommodation());
+                try{
+                    CommonAccommodation b = (CommonAccommodation) a;
+                    for(Room r : b.getRooms()){
+                        System.out.println("-----"+r.getID_Room() + " " + r.getName_Room());
+                    }
+                }
+                catch (Exception e){
+                    
+                }
+            }
+        }
+        catch (IOException e){
+            
+        }
+
         return acc;
     }
 
