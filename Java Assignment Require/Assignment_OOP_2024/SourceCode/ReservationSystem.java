@@ -61,6 +61,7 @@ public class ReservationSystem {
         }
         catch(IOException e){
             System.out.println("Error reader1 Req1: " + e.getMessage());
+            e.printStackTrace();
         }
 
         // add room
@@ -76,6 +77,7 @@ public class ReservationSystem {
             }
             reader2.close();
         } catch (IOException e) {
+            System.out.println("Error reader2 req1");
             e.printStackTrace();
         }
 
@@ -84,7 +86,7 @@ public class ReservationSystem {
             BufferedReader reader3 = new BufferedReader(new FileReader(roomOfAccPath));
             String line;
 
-            HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
+            HashMap<Integer, ArrayList<Integer>> roomMap = new HashMap<>();
 
             while((line = reader3.readLine()) != null){
                 String[] parts = line.split(",");
@@ -92,21 +94,20 @@ public class ReservationSystem {
                 int key = Integer.parseInt(parts[0]);
                 int value = Integer.parseInt(parts[1]);
 
-                if (map.containsKey(key)) {
-                    map.get(key).add(value);
+                if (roomMap.containsKey(key)) {
+                    roomMap.get(key).add(value);
                 } else {
                     ArrayList<Integer> list = new ArrayList<>();
                     list.add(value);
-                    map.put(key, list);
+                    roomMap.put(key, list);
                 }
             }
             reader3.close();
-            for (Integer key : map.keySet()) {
+            for (Integer key : roomMap.keySet()) {
                 ArrayList<Room> tempRoom = new ArrayList<>();
-                System.out.println("Key: " + key + ", Values: " + map.get(key));
                 for(Accommodation a : acc){
                     if(a.getID_Accommodation() == key){
-                        for(Integer value : map.get(key)){
+                        for(Integer value : roomMap.get(key)){
                             for(Room r : rooms){
                                 if(r.getID_Room() == value){
                                     tempRoom.add(r);
@@ -118,33 +119,60 @@ public class ReservationSystem {
                     }
                 }
             }
-
-            // test
-            for(Accommodation a : acc){
-                System.out.println(a.getID_Accommodation() + " " + a.getName_Accommodation() + " " + a.getAddress_Accommodation() + " " + a.getCity_Accommodation());
-                try{
-                    CommonAccommodation b = (CommonAccommodation) a;
-                    for(Room r : b.getRooms()){
-                        System.out.println("-----"+r.getID_Room() + " " + r.getName_Room());
-                    }
-                }
-                catch (Exception e){
-                    
-                }
-            }
         }
         catch (IOException e){
-            
+            System.out.println("Error reader3 req1");
+            e.printStackTrace();
         }
-
+        
         return acc;
     }
 
 
     // Requirement 2
     public ArrayList<Accommodation> searchForRoom(String city, int numOfPeople) {
-        /* Code here */
-        return null;
+        ArrayList<Accommodation> result = new ArrayList<>();
+        ArrayList<Accommodation> luxury = new ArrayList<>();
+        ArrayList<Accommodation> common = new ArrayList<>();
+
+        for(Accommodation a : accommodations){
+            if(a.city_Accommodation.equals(city)){
+                if(a instanceof CommonAccommodation){
+                    CommonAccommodation b  = (CommonAccommodation) a;
+                    // tong toan bo people trong tat ca cac room
+                    int sumAll_MaximumPeoples = 0;
+                    for(Room r : b.getRooms()){
+                        sumAll_MaximumPeoples += r.getMaximum_peoples_Room();
+                    }
+                    
+                    if(sumAll_MaximumPeoples >= numOfPeople){
+                        common.add(b);
+                    }
+                }
+                else{
+                    LuxuryAccommodation b = (LuxuryAccommodation) a;
+                    if(b.getMaximum_people_can_serve_LuxuryAccommodation() >= numOfPeople){
+                        luxury.add(b);
+                    }
+                }
+            }
+        }
+        Collections.sort(luxury, new Comparator<Accommodation>() {
+            @Override
+            public int compare(Accommodation a1, Accommodation a2) {
+                return a1.getName_Accommodation().compareTo(a2.getName_Accommodation());
+            }
+        });
+
+        Collections.sort(common, new Comparator<Accommodation>() {
+            @Override
+            public int compare(Accommodation a1, Accommodation a2) {
+                return a1.getName_Accommodation().compareTo(a2.getName_Accommodation());
+            }
+        });
+        result.addAll(luxury);
+        result.addAll(common);
+        return result;
     }
 
     // Requirement 3
