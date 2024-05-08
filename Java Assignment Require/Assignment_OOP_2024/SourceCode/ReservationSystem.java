@@ -19,9 +19,47 @@ public class ReservationSystem {
 
     // Requirement 1
     public ArrayList<Accommodation> loadAccommodations(String accPath, String roomPath, String roomOfAccPath) {
-        
-        
-        return null;
+        ArrayList<Accommodation> acc = new ArrayList<>();
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(accPath));
+            String line;
+            while((line = reader.readLine()) != null){
+                String[] parts = line.split(",");
+                int numberArgument = parts.length; 
+                switch(numberArgument) {
+                    case 5: 
+                        acc.add(new Homestay(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], Float.parseFloat(parts[4])));
+                        break;
+                    case 7:
+                        boolean convertYesNo = parts[5].equals("yes");
+                        acc.add(new Resort(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3],Float.parseFloat(parts[6]),Integer.parseInt(parts[4]),convertYesNo));
+                        break;
+                    case 6:
+                        acc.add(new Hotel(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3],Float.parseFloat(parts[5]),Integer.parseInt(parts[4])));
+                        break;
+                    case 10:
+                        boolean convertYesNo_pool = parts[4].equals("yes");
+                        boolean convertYesNo_Drink = parts[5].equals("yes");
+                        boolean convertYesNo_Breakfast = parts[6].equals("yes");
+                        boolean convertYesNo_Gym = parts[7].equals("yes");
+                        acc.add(new Villa(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], convertYesNo_pool, convertYesNo_Drink, convertYesNo_Breakfast, convertYesNo_Gym, Integer.parseInt(parts[8]), Integer.parseInt(parts[9])));
+                        break;
+                    case 11:
+                        convertYesNo_pool = parts[4].equals("yes");
+                        convertYesNo_Drink = parts[5].equals("yes");
+                        convertYesNo_Breakfast = parts[6].equals("yes");
+                        convertYesNo_Gym = parts[7].equals("yes");
+                        boolean convertYesNo_Bar = parts[8].equals("yes");
+                        acc.add(new CruiseShip(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], convertYesNo_pool, convertYesNo_Drink, convertYesNo_Breakfast, convertYesNo_Gym,Integer.parseInt(parts[9]), Integer.parseInt(parts[10]),convertYesNo_Bar));
+                        break;
+                }
+            }
+            reader.close();
+        }
+        catch(IOException e){
+            System.out.println("Error Req1: " + e.getMessage());
+        }
+        return acc;
     }
 
 
