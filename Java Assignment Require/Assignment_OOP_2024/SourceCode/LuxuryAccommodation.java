@@ -1,10 +1,11 @@
+
 public class LuxuryAccommodation extends Accommodation {
-    private boolean is_pool_available_LuxuryAccommodation;
-    private boolean is_welcome_drink_LuxuryAccommodation;
-    private boolean is_free_breakfast_LuxuryAccommodation;
-    private boolean is_gym_available_LuxuryAccommodation;
-    private int maximum_people_can_serve_LuxuryAccommodation;
-    private int price_night_LuxuryAccommodation;
+    protected boolean is_pool_available_LuxuryAccommodation;
+    protected boolean is_welcome_drink_LuxuryAccommodation;
+    protected boolean is_free_breakfast_LuxuryAccommodation;
+    protected boolean is_gym_available_LuxuryAccommodation;
+    protected int maximum_people_can_serve_LuxuryAccommodation;
+    protected int price_night_LuxuryAccommodation;
 
     // just constructor for parent classes
     public LuxuryAccommodation(int iD_Accommodation, String name_Accommodation, String address_Accommodation,
@@ -76,4 +77,35 @@ public class LuxuryAccommodation extends Accommodation {
         this.price_night_LuxuryAccommodation = price_night_LuxuryAccommodation;
     }
 
+    // create inner class for req3
+//     public class ReservatedRoom{
+//       int ID_reservation;
+//       int ID_accommodation;
+//       int ID_room;
+//       long timestampStart;
+//       long timestampEnd;
+
+//       public ReservatedRoom(int iD_reservation, int iD_accommodation, long timestampStart,
+//             long timestampEnd) {
+//          ID_reservation = iD_reservation;
+//          ID_accommodation = iD_accommodation;
+//          this.timestampStart = timestampStart;
+//          this.timestampEnd = timestampEnd;
+//       }
+      
+//    }
+//    // atribute for the req3
+//    private ArrayList<ReservatedRoom> reservatedRooms = new ArrayList<>();
+//    public void addReservatedRoom(int iD_reservation, int iD_accommodation, long timestampStart,
+//    long timestampEnd){
+//       reservatedRooms.add(new ReservatedRoom(iD_reservation, iD_accommodation, timestampStart, timestampEnd));
+//    }
+
+//    public ArrayList<ReservatedRoom> getReservatedRooms() {
+//       return reservatedRooms;
+//    }
+
+//    public void setReservatedRooms(ArrayList<ReservatedRoom> reservatedRooms) {
+//       this.reservatedRooms = reservatedRooms;
+//    }
 }

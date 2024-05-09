@@ -1,5 +1,19 @@
 tai sao atr 7 lai vi trung nhau o Resort va Hotel rating stars
 
 
+# req1:
+chua xu li format nhu 4.0 thi thanh 4.000000
+chua xu li 2 cai room data, chi moi xu li acc data
+
+
+
+
 #req2 
-khi kiểm tra commonaccommodate thì maximum số người xét riêng từng phòng hay tổng tất cả các phòng ???
+khi kiểm tra commonaccommodate thì maximum số người xét riêng từng phòng hay tổng tất cả các phòng ???	
+
+
+#req3:
+số lượng người tối
+đa lớn hơn không quá 2 ????
+Danh sách trả về theo thứ tự sắp xếp giảm dần thứ tự bảng chữ cái alphabet. ??? dựa trên tham số nào, tên nào ??
+dữ liệu time trong hàm main đã * 1000 chưa ???
