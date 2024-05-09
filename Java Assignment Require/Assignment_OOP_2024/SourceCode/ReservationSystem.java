@@ -324,17 +324,127 @@ public class ReservationSystem {
     // Requirement 5
     public double performReservation(String reservationPath, Accommodation acc, Room room, Date checkin, Date checkout)
             throws Exception {
-        /* Code here */
-        return 0.0;
+        
+        ArrayList<ReservatedRoom> reservatedRooms = new ArrayList<>();
+
+        // input data from reservation_5 to ArrayList
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(reservationPath));
+            String line;
+            while((line = reader.readLine()) != null){
+                String[] parts = line.split(",");
+                int numberArgument = parts.length;
+                switch (numberArgument) {
+                    case 4:
+                        reservatedRooms.add(new ReservatedRoom(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Long.parseLong(parts[2]), Long.parseLong(parts[3])));
+                        break;
+                    case 5:
+                        reservatedRooms.add(new ReservatedRoom(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),Integer.parseInt(parts[2]), Long.parseLong(parts[3]), Long.parseLong(parts[4])));
+                        break;
+                    default:
+                        System.out.println("Error, invalid number of argument req5");
+                        break;
+                }
+            }
+            reader.close();
+        }
+        catch(IOException e) {
+            System.out.println("Error reader req5");
+        }
+        
+        // check if room input is belong to common or luxury
+        // co ve nhu only common =)))
+        boolean checkDoesRoom_InResevated = false;
+        double totalMoney = 0.0;
+        double payMoney = 0.0;
+        for(Accommodation a : accommodations){
+            if(a instanceof CommonAccommodation){
+                CommonAccommodation b = (CommonAccommodation) a;
+                if(b.getID_Accommodation() == acc.ID_Accommodation){
+                    for(ReservatedRoom reRoom : reservatedRooms) {
+                        System.out.println(reRoom.ID_room + "," +room.getID_Room());
+                        if(reRoom.ID_room == room.getID_Room()){
+                            Date start = new Date(reRoom.timestampStart * 1000);
+                            Date end = new Date(reRoom.timestampEnd * 1000);
+                            
+                            boolean checkOverlap = start.before(checkout) && end.after(checkin);
+                            long startCheckIn = checkin.getTime();
+                            long endCheckOut = checkout.getTime();
+                            if(checkOverlap){
+                                checkDoesRoom_InResevated = true;
+                                totalMoney = room.getPrice_night_Room() * diffBetweenDays(startCheckIn, endCheckOut);
+                                payMoney = totalMoney + 0.08*totalMoney;
+                                BufferedWriter writer = new BufferedWriter(new FileWriter(reservationPath,true));
+                                writer.newLine();
+                                String str = String.format("%d,%d,%d,%d,%d",reservatedRooms.size()+1, acc.ID_Accommodation,room.getID_Room(),startCheckIn,endCheckOut);
+                                writer.write(str);
+                                writer.close();
+                                // ko nen thoat vong lap vi co the 1 room nhung 2 accommodation
+                                break;
+                            }
+                            else{
+                                throw new Exception("The room has already been booked during this time period.");
+                            }
+                        }
+                    }
+                }
+            }
+            if(checkDoesRoom_InResevated == true){
+                break;
+            }
+        }
+        
+
+        if(checkDoesRoom_InResevated == false){
+            for(Accommodation a : accommodations){
+                if(a instanceof CommonAccommodation){
+                    CommonAccommodation b = (CommonAccommodation) a;
+                    if(b.ID_Accommodation == acc.ID_Accommodation){
+                        for(Room r : b.getRooms()){
+                            if((r.getID_Room() == room.getID_Room())){
+                                checkDoesRoom_InResevated = true;
+                                System.out.println("chao em");
+                                long startCheckIn = checkin.getTime();
+                                long endCheckOut = checkout.getTime();
+                                totalMoney = room.getPrice_night_Room() * diffBetweenDays(startCheckIn, endCheckOut);
+                                payMoney = totalMoney + 0.08*totalMoney;
+                                BufferedWriter writer = new BufferedWriter(new FileWriter(reservationPath,true));
+                                writer.newLine();
+                                String str = String.format("%d,%d,%d,%d,%d",reservatedRooms.size()+1, acc.ID_Accommodation,room.getID_Room(),startCheckIn,endCheckOut);
+                                writer.write(str);
+                                writer.close();
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(checkDoesRoom_InResevated == true){
+                    break;
+                }
+            }
+        }
+        return payMoney;
     }
 
     // Helper functions for req 5
-    public long diffBetweenDays(long dateStart, long dateEnd) {
-        Date date = new Date(dateStart * 1000);
-        Date date1 = new Date(dateEnd * 1000);
+    // public long diffBetweenDays(long dateStart, long dateEnd) {
+    //     Date date = new Date(dateStart * 1000);
+    //     Date date1 = new Date(dateEnd * 1000);
+    //     long diff = Math.abs(date1.getTime() - date.getTime());
+    //     long numOfDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+    //     return numOfDays;
+    // }
 
-        long diff = Math.abs(date1.getTime() - date.getTime());
-        long numOfDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-        return numOfDays;
+    // cua em
+    public static long diffBetweenDays(long dateStart, long dateEnd) {
+        Date startDate = new Date(dateStart * 1000);
+        Date endDate = new Date(dateEnd * 1000);
+
+        long startTime = startDate.getTime();
+        long endTime = endDate.getTime();
+
+        double timeDifference = endTime - startTime;
+        double daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+        return (long) Math.ceil(daysDifference);
     }
 }

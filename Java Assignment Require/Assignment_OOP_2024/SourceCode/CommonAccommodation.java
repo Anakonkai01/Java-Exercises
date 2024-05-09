@@ -34,21 +34,4 @@ public class CommonAccommodation extends Accommodation {
       this.rating_Coefficient = rating_Coefficient;
    }
 
-   // create a new static class for storing the reservated rooms for exercise 3
-   
-   // atribute for the req3
-   // private ArrayList<ReservatedRoom> reservatedRooms = new ArrayList<>();
-   // public void addReservatedRoom(int iD_reservation, int iD_accommodation, int iD_room, long timestampStart,
-   // long timestampEnd){
-   //    reservatedRooms.add(new ReservatedRoom(iD_reservation, iD_accommodation, iD_room, timestampStart, timestampEnd));
-   // }
-
-   // public ArrayList<ReservatedRoom> getReservatedRooms() {
-   //    return reservatedRooms;
-   // }
-
-   // public void setReservatedRooms(ArrayList<ReservatedRoom> reservatedRooms) {
-   //    this.reservatedRooms = reservatedRooms;
-   // }
-
 }

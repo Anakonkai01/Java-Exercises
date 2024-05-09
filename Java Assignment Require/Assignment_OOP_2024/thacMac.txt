@@ -1,6 +1,10 @@
 tai sao atr 7 lai vi trung nhau o Resort va Hotel rating stars
 
 
+Ma dinh danh la duy nhat phai ko ????????????????
+Du lieu truyen vao
+mấy cái date thầy truyền đi đều chưa * 1000 vậy nó vẫn là giây ????
+
 # req1:
 chua xu li format nhu 4.0 thi thanh 4.000000
 chua xu li 2 cai room data, chi moi xu li acc data
@@ -17,3 +21,16 @@ số lượng người tối
 đa lớn hơn không quá 2 ????
 Danh sách trả về theo thứ tự sắp xếp giảm dần thứ tự bảng chữ cái alphabet. ??? dựa trên tham số nào, tên nào ??
 dữ liệu time trong hàm main đã * 1000 chưa ???
+
+
+#req5:
+tham so room truyen vao la cua Common hay la Luxury
+Với tham số acc và room được truyền vào sẽ luôn đảm bảo hợp lệ và tồn tại trong danh sách Accommodation ban đầu.
+==> vay 100% dam bao la ton tai trong danh sach ban dau dung ko ???
+-- diffBetweenDay cua thay lam tron sai
+lỡ chẳng hạn như trong Data reservation_5 dư 1 hàng trống, thì nếu nó xuống dòng thì thành ra như thế này à
+    vd : 
+    19,7,19,1660000000,1660200000
+    20,7,20,1660300000,1660500000
+
+    21,1,1,1713368812,1713398812

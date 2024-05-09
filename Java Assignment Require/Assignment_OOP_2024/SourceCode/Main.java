@@ -47,9 +47,9 @@ public class Main {
                     break;
                 case "4":
                     // requirement 4
-                    List<Accommodation> req4_1 = ReservationSystem.searchInAdvance(null, 2, "Standard", true,
+                    List<Accommodation> req4_1 = ReservationSystem.searchInAdvance("City A", 2, "Standard", true,
                             5, true, null);
-                    List<Accommodation> req4_2 = ReservationSystem.searchInAdvance(null, 20, "Standard", true,
+                    List<Accommodation> req4_2 = ReservationSystem.searchInAdvance("City A", 20, "Standard", true,
                             5, true, null);
                     writeFile(REQUIREMENT_OUTPUT_FILES[3], req4_1);
                     writeFile(REQUIREMENT_OUTPUT_FILES[4], req4_2);
@@ -61,8 +61,8 @@ public class Main {
                         Accommodation acc = new Homestay(1, "Cozy Homestay", "123 Main St", "City A", 4.8f);
                         Room room = new Room(1, "Single Room", 1, "Standard", 1, 1, 20.0, 50.0);
                         double totalPrice = ReservationSystem.performReservation("data/reservation_5.csv", acc, room,
-                                new Date(1713368812),
-                                new Date(1713398812));
+                                new Date(1713368812), 
+                                new Date(1713398812)); 
                         req5.add(String.valueOf(totalPrice));
                     } catch (Exception e) {
                         req5.add(String.valueOf(e.getMessage()));

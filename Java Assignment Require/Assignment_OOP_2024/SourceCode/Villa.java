@@ -19,8 +19,4 @@ public class Villa extends LuxuryAccommodation {
         +", "+getMaximum_people_can_serve_LuxuryAccommodation()+", "+getPrice_night_LuxuryAccommodation()+"]";
     }
     
-    public static void main(String[] args) {
-        Villa villa1 = new Villa(1, "Ten", "123", "City", true, false, true, true, 10, 150);
-        System.out.println(villa1);
-    }
 }
