@@ -76,36 +76,4 @@ public class LuxuryAccommodation extends Accommodation {
     public void setPrice_night_LuxuryAccommodation(int price_night_LuxuryAccommodation) {
         this.price_night_LuxuryAccommodation = price_night_LuxuryAccommodation;
     }
-
-    // create inner class for req3
-//     public class ReservatedRoom{
-//       int ID_reservation;
-//       int ID_accommodation;
-//       int ID_room;
-//       long timestampStart;
-//       long timestampEnd;
-
-//       public ReservatedRoom(int iD_reservation, int iD_accommodation, long timestampStart,
-//             long timestampEnd) {
-//          ID_reservation = iD_reservation;
-//          ID_accommodation = iD_accommodation;
-//          this.timestampStart = timestampStart;
-//          this.timestampEnd = timestampEnd;
-//       }
-      
-//    }
-//    // atribute for the req3
-//    private ArrayList<ReservatedRoom> reservatedRooms = new ArrayList<>();
-//    public void addReservatedRoom(int iD_reservation, int iD_accommodation, long timestampStart,
-//    long timestampEnd){
-//       reservatedRooms.add(new ReservatedRoom(iD_reservation, iD_accommodation, timestampStart, timestampEnd));
-//    }
-
-//    public ArrayList<ReservatedRoom> getReservatedRooms() {
-//       return reservatedRooms;
-//    }
-
-//    public void setReservatedRooms(ArrayList<ReservatedRoom> reservatedRooms) {
-//       this.reservatedRooms = reservatedRooms;
-//    }
 }

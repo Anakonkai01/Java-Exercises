@@ -137,13 +137,11 @@ public class ReservationSystem {
                 if(a instanceof CommonAccommodation){
                     CommonAccommodation b  = (CommonAccommodation) a;
                     // tong toan bo people trong tat ca cac room
-                    int sumAll_MaximumPeoples = 0;
-                    for(Room r : b.getRooms()){
-                        sumAll_MaximumPeoples += r.getMaximum_peoples_Room();
-                    }
-                    
-                    if(sumAll_MaximumPeoples >= numOfPeople){
-                        common.add(b);
+                    for(Room room : b.rooms){
+                        if(room.getMaximum_peoples_Room() >= numOfPeople){
+                            common.add(b);
+                            break;
+                        }
                     }
                 }
                 else{
@@ -280,11 +278,7 @@ public class ReservationSystem {
 
         return uniqueResult;
     }
-
-    // public boolean checkOverlap(LuxuryAccommodation a,CommonAccommodation b){ 
-    //     return true;   
-    // }
-    // static class req3
+    //static class for Requirement 3
     static class ReservatedRoom {
         private int ID_reservation;
         private int ID_accommodation;
