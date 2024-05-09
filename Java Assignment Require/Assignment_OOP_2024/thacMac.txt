@@ -22,6 +22,11 @@ số lượng người tối
 Danh sách trả về theo thứ tự sắp xếp giảm dần thứ tự bảng chữ cái alphabet. ??? dựa trên tham số nào, tên nào ??
 dữ liệu time trong hàm main đã * 1000 chưa ???
 
+#req4
+Trường hợp có trên 02 thông tin khác city và numOfPeople cần lọc mà không có loại hình dịch vụ nào
+đáp ứng được thì trả về danh sách rỗng. ???
+rỗng là Null hả ????
+
 
 #req5:
 tham so room truyen vao la cua Common hay la Luxury
