@@ -1,12 +1,18 @@
+import java.util.ArrayList;
+import java.util.Vector;
+
 public class Main {
     public static void main(String[] args) {
-        Student st1 = new Student("Nhan","523H0164");
-        st1.addCourse("Triet hoc",9);
-        st1.addCourse("Phap Luat",8);
-        st1.removeCourse("Phap Luat");
-        System.out.println(st1);
-        st1.addCourse("Giai Tich", 7);
-        System.out.println(st1.caculateGPA());
-        System.out.println(st1);
+
+        ArrayList<Car> listCar = new ArrayList<>();
+        Vector<Circle> listCircle = new Vector<>();
+
+        listCar.add(new Car("Ford", 1999));
+        listCar.add(new Car("Toyota", 2000));
+        listCircle.add(new Circle(10));
+        listCircle.add(new Circle(20));
+
+        
+
     }
 }
