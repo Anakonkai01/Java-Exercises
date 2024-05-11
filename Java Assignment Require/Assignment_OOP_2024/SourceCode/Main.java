@@ -47,9 +47,9 @@ public class Main {
                     break;
                 case "4":
                     // requirement 4
-                    List<Accommodation> req4_1 = ReservationSystem.searchInAdvance("City A", 2, "Standard", true,
-                            5, true, null);
-                    List<Accommodation> req4_2 = ReservationSystem.searchInAdvance("City A", 20, "Standard", true,
+                    List<Accommodation> req4_1 = ReservationSystem.searchInAdvance("City A", 2, "Standard", false,
+                            5, false, null);
+                    List<Accommodation> req4_2 = ReservationSystem.searchInAdvance("City D", 20, "Standard", true,
                             5, true, null);
                     writeFile(REQUIREMENT_OUTPUT_FILES[3], req4_1);
                     writeFile(REQUIREMENT_OUTPUT_FILES[4], req4_2);

@@ -100,6 +100,8 @@ public class ReservationSystem {
                 }
             }
             reader3.close();
+            // thuc hien map du lieu tu hashmap vao acc
+            // toi uu thuat thoan 
             for (Integer key : roomMap.keySet()) {
                 ArrayList<Room> tempRoom = new ArrayList<>();
                 for(Accommodation a : acc){
@@ -122,6 +124,13 @@ public class ReservationSystem {
             e.printStackTrace();
         }
         
+        // for(Accommodation a : acc) {
+        //     System.out.println(a);
+        //     if(a instanceof CommonAccommodation){
+        //         CommonAccommodation b = (CommonAccommodation) a;
+        //         System.out.println("---"+b.getRooms());
+        //     }
+        // }
         return acc;
     }
 
@@ -317,7 +326,42 @@ public class ReservationSystem {
     // Requirement 4
     public ArrayList<Accommodation> searchInAdvance(String city, Integer numOfPeople, String roomType,
             Boolean privatePool, Integer starQuality, Boolean freeBreakfast, Boolean privateBar) {
-        /* Code here */
+        
+        /* 2 tham số khác city và numOfPeople thì ko xét ???? */
+        // roomType (COMMON ACCOMMODATION)
+        // privatePool (RESORT, LUXURY)
+        // starQuality (HOTEL, RESORT)
+        // freeBreakfast (LUXURY)
+        // privateBar (CRUISE SHIP)
+        ArrayList<Accommodation> filterList1 = new ArrayList<>();
+        ArrayList<Accommodation> filterList2 = new ArrayList<>();
+        ArrayList<Accommodation> filterList3 = new ArrayList<>();
+        ArrayList<Accommodation> filterList4 = new ArrayList<>();
+        ArrayList<Accommodation> filterList5 = new ArrayList<>();
+        
+        ArrayList<Accommodation> finalFilter = new ArrayList<>();
+
+        for(Accommodation a : accommodations){
+            // check city
+            if(a.getCity_Accommodation().equals(city)){
+                if(roomType != null){
+                    if(a instanceof CommonAccommodation){
+                    CommonAccommodation b = (CommonAccommodation) a;
+                        for(Room room : b.getRooms()){
+                            if(room.getGenre_Room().equals(roomType)){
+                                if(numOfPeople >= room.getMaximum_peoples_Room()){
+                                    filterList1.add(b);
+                                }
+                            }
+                        }
+                    }
+                }
+                if(privatePool != null){
+                    if()
+                }
+            }
+        }
+        // return filterList;
         return null;
     }
 
@@ -362,7 +406,6 @@ public class ReservationSystem {
                 CommonAccommodation b = (CommonAccommodation) a;
                 if(b.getID_Accommodation() == acc.ID_Accommodation){
                     for(ReservatedRoom reRoom : reservatedRooms) {
-                        System.out.println(reRoom.ID_room + "," +room.getID_Room());
                         if(reRoom.ID_room == room.getID_Room()){
                             Date start = new Date(reRoom.timestampStart * 1000);
                             Date end = new Date(reRoom.timestampEnd * 1000);
@@ -403,7 +446,6 @@ public class ReservationSystem {
                         for(Room r : b.getRooms()){
                             if((r.getID_Room() == room.getID_Room())){
                                 checkDoesRoom_InResevated = true;
-                                System.out.println("chao em");
                                 long startCheckIn = checkin.getTime();
                                 long endCheckOut = checkout.getTime();
                                 totalMoney = room.getPrice_night_Room() * diffBetweenDays(startCheckIn, endCheckOut);
@@ -427,24 +469,34 @@ public class ReservationSystem {
     }
 
     // Helper functions for req 5
-    // public long diffBetweenDays(long dateStart, long dateEnd) {
-    //     Date date = new Date(dateStart * 1000);
-    //     Date date1 = new Date(dateEnd * 1000);
-    //     long diff = Math.abs(date1.getTime() - date.getTime());
-    //     long numOfDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-    //     return numOfDays;
-    // }
+    public long diffBetweenDays(long dateStart, long dateEnd) {
+        Date date = new Date(dateStart * 1000);
+        Date date1 = new Date(dateEnd * 1000);
+
+        date = removeTime(date);
+        date1 = removeTime(date1);
+
+        long diff = Math.abs(date1.getTime() - date.getTime());
+        long numOfDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        return numOfDays;
+    }
+
+    private Date removeTime(Date date) {
+        long time = date.getTime();
+        long timeWithoutTime = time - (time % (24 * 60 * 60 * 1000));
+        return new Date(timeWithoutTime);
+    }
 
     // cua em
-    public static long diffBetweenDays(long dateStart, long dateEnd) {
-        Date startDate = new Date(dateStart * 1000);
-        Date endDate = new Date(dateEnd * 1000);
+    // public long diffBetweenDays(long dateStart, long dateEnd) {
+    //     Date startDate = new Date(dateStart * 1000);
+    //     Date endDate = new Date(dateEnd * 1000);
 
-        long startTime = startDate.getTime();
-        long endTime = endDate.getTime();
+    //     long startTime = startDate.getTime();
+    //     long endTime = endDate.getTime();
 
-        double timeDifference = endTime - startTime;
-        double daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-        return (long) Math.ceil(daysDifference);
-    }
+    //     double timeDifference = endTime - startTime;
+    //     double daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+    //     return (long) Math.ceil(daysDifference);
+    // }
 }
