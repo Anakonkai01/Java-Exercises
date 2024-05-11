@@ -39,3 +39,7 @@ lỡ chẳng hạn như trong Data reservation_5 dư 1 hàng trống, thì nếu
     20,7,20,1660300000,1660500000
 
     21,1,1,1713368812,1713398812
+
+
+
+nhu vay in ra lai 1 file reservation_5 trong file output cua minh chu ko phai file data sao

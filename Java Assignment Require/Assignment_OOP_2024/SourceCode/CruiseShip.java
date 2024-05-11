@@ -14,6 +14,14 @@ public class CruiseShip extends LuxuryAccommodation {
                 maximum_people_can_serve_LuxuryAccommodation, price_night_LuxuryAccommodation);
         this.is_private_bar_CruiseShip = is_private_bar_CruiseShip;
     }
+    
+    public boolean isIs_private_bar_CruiseShip() {
+        return is_private_bar_CruiseShip;
+    }
+
+    public void setIs_private_bar_CruiseShip(boolean is_private_bar_CruiseShip) {
+        this.is_private_bar_CruiseShip = is_private_bar_CruiseShip;
+    }
 
     @Override
     public String toString() {
@@ -25,5 +33,6 @@ public class CruiseShip extends LuxuryAccommodation {
                 + ", " + isIs_free_breakfast_LuxuryAccommodation()
                 + ", " + isIs_gym_available_LuxuryAccommodation() + "]";
     }
+
     
 }
