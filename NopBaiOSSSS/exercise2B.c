@@ -17,8 +17,8 @@ struct message {
 };
 
 int main(int argc, char *argv[]) {
-    if (argc != 4) {
-        fprintf(stderr, "Usage: %s <operand1> <operand2> <operator>\n", argv[0]);
+    if(argc != 4) {
+        printf("lack of argument");
         return -1;
     }
 
@@ -26,15 +26,13 @@ int main(int argc, char *argv[]) {
     int operand2 = atoi(argv[2]);
     char operator = argv[3][0];
 
-    // Generate key using ftok
-    key_t key = ftok(".", 'a');
+    key_t key = ftok(".", 'a'); // generate key
     if (key == -1) {
         perror("ftok");
         return -1;
     }
 
-    // Create message queue
-    int msqid = msgget(key, IPC_CREAT | 0666);
+    int msqid = msgget(key, IPC_CREAT | 0666); // create message queue
     if (msqid == -1) {
         perror("msgget");
         return -1;
@@ -51,7 +49,6 @@ int main(int argc, char *argv[]) {
         struct message msg;
         msg.mtype = 1; // Message type is 1
 
-        // Set message fields
         msg.operand1 = operand1;
         msg.operand2 = operand2;
         msg.operator = operator;
@@ -64,16 +61,13 @@ int main(int argc, char *argv[]) {
 
         return 0;
     } else {
-        // Parent process
         struct message msg;
 
-        // Receive message from child
-        if (msgrcv(msqid, &msg, sizeof(struct message) - sizeof(long), 1, 0) == -1) {
+        if (msgrcv(msqid, &msg, sizeof(struct message) - sizeof(long), 1, 0) == -1) { //receive message
             perror("msgrcv");
             return -1;
         }
 
-        // Perform calculation based on operator
         int result;
         switch (msg.operator) {
             case '+':
@@ -97,25 +91,23 @@ int main(int argc, char *argv[]) {
                 return -1;
         }
 
-        // Print result
         printf("%d %c %d = %d\n", msg.operand1, msg.operator, msg.operand2, result);
 
-        // Write result to file
-        FILE *file = fopen("result.txt", "w");
+        FILE *file = fopen("result.txt", "w"); // write result to file
         if (file == NULL) {
             perror("fopen");
             return -1;
         }
         fprintf(file, "%d %c %d = %d\n", msg.operand1, msg.operator, msg.operand2, result);
         fclose(file);
+        printf("\nresult write to result.txt\n");
 
-        // Remove message queue
-        if (msgctl(msqid, IPC_RMID, NULL) == -1) {
+        
+        if (msgctl(msqid, IPC_RMID, NULL) == -1) { // remove message
             perror("msgctl");
             return -1;
         }
 
-        // Wait for child process to finish
         wait(NULL);
     }
 
