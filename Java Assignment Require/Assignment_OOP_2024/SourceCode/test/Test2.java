@@ -14,15 +14,11 @@ class Child extends Parent2{
 }
 public class Test2 {
     public static void main(String[] args) {
-        Child child1 = new Child();
-        Parent1 parent1 = new Parent1();
-        // if(parent1 instanceof)
+        Child obj = new Child();
+        System.out.println(obj.a);
+        System.out.println(obj.b);
+        System.out.println(obj.c);
 
-        boolean a = true;
-        boolean b= true;
-        if(a == b){
-            System.out.println("Hello weorld");
-        }
     }
     
 }

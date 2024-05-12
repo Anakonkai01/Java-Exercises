@@ -219,15 +219,16 @@ public class ReservationSystem {
                 if(a instanceof LuxuryAccommodation){
                     LuxuryAccommodation b = (LuxuryAccommodation) a;
                     if(b.price_night_LuxuryAccommodation >= priceFrom && b.price_night_LuxuryAccommodation <= priceTo){
-                        if(b.maximum_people_can_serve_LuxuryAccommodation <= 2 || b.maximum_people_can_serve_LuxuryAccommodation <= numOfPeople){
+                        if((numOfPeople + 2 >= b.maximum_people_can_serve_LuxuryAccommodation) && (numOfPeople <= b.maximum_people_can_serve_LuxuryAccommodation)){
                             for(ReservatedRoom reRoom : reservatedRooms) {
                                 // check ID Accommodation and check room == -1
                                 if((reRoom.ID_accommodation == b.ID_Accommodation) && (reRoom.ID_room == -1)){
                                     Date start = new Date(reRoom.timestampStart * 1000);
                                     Date end = new Date(reRoom.timestampEnd * 1000);
 
-                                    boolean checkOverlap = start.before(checkout) && end.after(checkin);
-                                    if(checkOverlap){
+                                    
+                                    boolean checkOverlap = (start.before(checkout) && end.after(checkin)) || (start.equals(checkin) && end.equals(checkout));
+                                    if(!checkOverlap){
                                         result.add(b);
                                     }
                                 }
@@ -239,11 +240,11 @@ public class ReservationSystem {
                     }
                 }
                 // commonAccommodation instance
-                else{
+                else{ // ay da
                     CommonAccommodation b = (CommonAccommodation) a;
                     for(Room room : b.getRooms()){
                         if(room.getPrice_night_Room() >= priceFrom && room.getPrice_night_Room() <= priceTo){
-                            if(room.getMaximum_peoples_Room() <= 2 || room.getMaximum_peoples_Room() <= numOfPeople){
+                            if((numOfPeople + 2 >= room.getMaximum_peoples_Room()) && (numOfPeople <= room.getMaximum_peoples_Room())){
                                 for(ReservatedRoom reRoom : reservatedRooms) {
                                     // check ID Accommodation and check room == -1
                                     if((reRoom.ID_accommodation == b.ID_Accommodation) && (reRoom.ID_room == room.getID_Room())){
@@ -252,8 +253,8 @@ public class ReservationSystem {
                                         
                                         System.out.println(b.getRooms());
 
-                                        boolean checkOverlap = start.before(checkout) && end.after(checkin);
-                                        if(checkOverlap){
+                                        boolean checkOverlap = (start.before(checkout) && end.after(checkin)) || (start.equals(checkin) && end.equals(checkout));
+                                        if(!checkOverlap){
                                             result.add(b);
                                         }
                                     }
@@ -281,7 +282,7 @@ public class ReservationSystem {
         Collections.sort(uniqueResult, new Comparator<Accommodation>() {
             @Override
             public int compare(Accommodation a1, Accommodation a2) {
-                return a1.getName_Accommodation().compareTo(a2.getName_Accommodation());
+                return a2.getName_Accommodation().compareTo(a1.getName_Accommodation());
             }
         });
 
@@ -328,16 +329,21 @@ public class ReservationSystem {
             Boolean privatePool, Integer starQuality, Boolean freeBreakfast, Boolean privateBar) {
         
         /* 2 tham số khác city và numOfPeople thì ko xét ???? */
-        // roomType (COMMON ACCOMMODATION)
+
+        // roomType (COMMON)
         // privatePool (RESORT, LUXURY)
         // starQuality (HOTEL, RESORT)
         // freeBreakfast (LUXURY)
         // privateBar (CRUISE SHIP)
+
+        
+
         ArrayList<Accommodation> filterList1 = new ArrayList<>();
         ArrayList<Accommodation> filterList2 = new ArrayList<>();
         ArrayList<Accommodation> filterList3 = new ArrayList<>();
         ArrayList<Accommodation> filterList4 = new ArrayList<>();
         ArrayList<Accommodation> filterList5 = new ArrayList<>();
+        
 
         ArrayList<Boolean> checkArgumentNull = new ArrayList<>();
 
@@ -351,10 +357,9 @@ public class ReservationSystem {
                     if(a instanceof CommonAccommodation){
                     CommonAccommodation b = (CommonAccommodation) a;
                         for(Room room : b.getRooms()){
-                            if((room.getGenre_Room().equals(roomType)) && (numOfPeople >= room.getMaximum_peoples_Room())){
+                            if((room.getGenre_Room().equals(roomType)) && (numOfPeople <= room.getMaximum_peoples_Room())){
                                 filterList1.add(b);
                                 // tim thay 1 room roi thi break lun ko can tim them nua vi da co room thoai man dieu kien
-                                System.out.println("Hello nice");
                                 break;
                             }
                         }
@@ -455,14 +460,14 @@ public class ReservationSystem {
         //     }
         // }
 
-        // // add acc vao
-        // // for (Room room : list1) {
-        // //     // Kiểm tra xem phần tử hiện tại có tồn tại trong tất cả các ArrayList còn lại không
-        // //     if (list2.contains(room) && list3.contains(room) && list4.contains(room) && list5.contains(room)) {
-        // //         // Nếu có, thêm phần tử đó vào ArrayList mới
-        // //         commonRooms.add(room);
-        // //     }
-        // // }
+        // add acc vao
+        // for (Accommodation acc : list1) {
+        //     // Kiểm tra xem phần tử hiện tại có tồn tại trong tất cả các ArrayList còn lại không
+        //     if (list2.contains(acc) && list3.contains(room) && list4.contains(room) && list5.contains(room)) {
+        //         // Nếu có, thêm phần tử đó vào ArrayList mới
+        //         commonAccommodation.add(acc);
+        //     }
+        // }
 
         List<List<Accommodation>> nonNullLists = new ArrayList<>();
 
@@ -549,10 +554,10 @@ public class ReservationSystem {
                             Date start = new Date(reRoom.timestampStart * 1000);
                             Date end = new Date(reRoom.timestampEnd * 1000);
                             
-                            boolean checkOverlap = start.before(checkout) && end.after(checkin);
+                            boolean checkOverlap = (start.before(checkout) && end.after(checkin)) || (start.equals(checkin) && end.equals(checkout));
                             long startCheckIn = checkin.getTime();
                             long endCheckOut = checkout.getTime();
-                            if(checkOverlap){
+                            if(!checkOverlap){
                                 checkDoesRoom_InResevated = true;
                                 totalMoney = room.getPrice_night_Room() * diffBetweenDays(startCheckIn, endCheckOut);
                                 payMoney = totalMoney + 0.08*totalMoney;
