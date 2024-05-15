@@ -145,7 +145,6 @@ public class ReservationSystem {
             if(a.city_Accommodation.equals(city)){
                 if(a instanceof CommonAccommodation){
                     CommonAccommodation b  = (CommonAccommodation) a;
-                    // tong toan bo people trong tat ca cac room
                     for(Room room : b.rooms){
                         if(room.getMaximum_peoples_Room() >= numOfPeople){
                             common.add(b);
@@ -185,7 +184,7 @@ public class ReservationSystem {
             Date checkin, Date checkout, String city, int numOfPeople) {
         
         ArrayList<Accommodation> result = new ArrayList<>();
-        ArrayList<ReservatedRoom> reservatedRooms = new ArrayList<>();
+        ArrayList<Reservation> reservatedRooms = new ArrayList<>();
         
         // input data from reservation_3 to ArrayList
         try{
@@ -196,10 +195,18 @@ public class ReservationSystem {
                 int numberArgument = parts.length;
                 switch (numberArgument) {
                     case 4:
-                        reservatedRooms.add(new ReservatedRoom(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Long.parseLong(parts[2]), Long.parseLong(parts[3])));
+                        long checkinLong = Long.parseLong(parts[2]);
+                        long checkoutLong = Long.parseLong(parts[3]);
+                        Date checkinDate = new Date(checkinLong * 1000);
+                        Date checkoutDate = new Date(checkoutLong * 1000);
+                        reservatedRooms.add(new ReservatedRoom(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), checkinDate, checkoutDate));
                         break;
                     case 5:
-                        reservatedRooms.add(new ReservatedRoom(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),Integer.parseInt(parts[2]), Long.parseLong(parts[3]), Long.parseLong(parts[4])));
+                        checkinLong = Long.parseLong(parts[3]);
+                        checkoutLong = Long.parseLong(parts[4]);
+                        checkinDate = new Date(checkinLong * 1000);
+                        checkoutDate = new Date(checkoutLong * 1000);
+                        reservatedRooms.add(new ReservatedRoom(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),Integer.parseInt(parts[2]), checkinDate, checkoutDate));
                         break;
                     default:
                         System.out.println("Error, invalid number of argument req3");
@@ -218,9 +225,9 @@ public class ReservationSystem {
                 // luxury instance
                 if(a instanceof LuxuryAccommodation){
                     LuxuryAccommodation b = (LuxuryAccommodation) a;
-                    if(b.price_night_LuxuryAccommodation >= priceFrom && b.price_night_LuxuryAccommodation <= priceTo){
+                    if((b.price_night_LuxuryAccommodation >= priceFrom) && (b.price_night_LuxuryAccommodation <= priceTo)){
                         if((numOfPeople + 2 >= b.maximum_people_can_serve_LuxuryAccommodation) && (numOfPeople <= b.maximum_people_can_serve_LuxuryAccommodation)){
-                            for(ReservatedRoom reRoom : reservatedRooms) {
+                            for(Reservation reRoom : reservatedRooms) {
                                 // check ID Accommodation and check room == -1
                                 if((reRoom.ID_accommodation == b.ID_Accommodation) && (reRoom.ID_room == -1)){
                                     Date start = new Date(reRoom.timestampStart * 1000);
@@ -440,34 +447,6 @@ public class ReservationSystem {
             }
         }
         
-        // System.out.println("1:");
-        // System.out.println(filterList1);
-        // System.out.println("2");
-        // System.out.println(filterList2);
-        // System.out.println("3");
-        // System.out.println(filterList3);
-        // System.out.println("4");
-        // System.out.println(filterList4);
-        // System.out.println("5");
-        // System.out.println(filterList5);
-
-        // System.out.println(checkArgumentNull);
-        
-        // ArrayList<ArrayList<Accommodation>> nonNull_List_Argument = new ArrayList<>();
-        // for (ArrayList<Accommodation> list : ) {
-        //     if (!list.isEmpty()) {
-        //         nonEmptyLists.add(list);
-        //     }
-        // }
-
-        // add acc vao
-        // for (Accommodation acc : list1) {
-        //     // Kiểm tra xem phần tử hiện tại có tồn tại trong tất cả các ArrayList còn lại không
-        //     if (list2.contains(acc) && list3.contains(room) && list4.contains(room) && list5.contains(room)) {
-        //         // Nếu có, thêm phần tử đó vào ArrayList mới
-        //         commonAccommodation.add(acc);
-        //     }
-        // }
 
         List<List<Accommodation>> nonNullLists = new ArrayList<>();
 
@@ -540,8 +519,7 @@ public class ReservationSystem {
             System.out.println("Error reader req5");
         }
         
-        // check if room input is belong to common or luxury
-        // co ve nhu only common =)))
+
         boolean checkDoesRoom_InResevated = false;
         double totalMoney = 0.0;
         double payMoney = 0.0;
