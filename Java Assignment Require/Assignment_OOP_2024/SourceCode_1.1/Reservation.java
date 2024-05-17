@@ -7,6 +7,7 @@ public class Reservation {
     private Date checkin;
     private Date checkout;
 
+    // common
     public Reservation(int reservationId, int accId, int roomId, Date checkin, Date checkout) {
         this.reservationId = reservationId;
         this.accId = accId;
@@ -15,7 +16,7 @@ public class Reservation {
         this.checkout = checkout;
     }
 
-    // constructor tu dinh nghia
+    // constructor tu dinh nghia cho luxury
     public Reservation(int iD_reservation, int iD_accommodation, Date timestampStart, Date timestampEnd) {
         this.reservationId = iD_reservation;
         this.accId = iD_accommodation;

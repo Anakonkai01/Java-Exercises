@@ -182,7 +182,6 @@ public class ReservationSystem {
         ArrayList<Accommodation> result = new ArrayList<>();
 
         ArrayList<Reservation> reservatedRooms = new ArrayList<>();
-        ArrayList<Accommodation> NonIn_reservationList = new ArrayList<>();
 
         // input data from reservation_3 to ArrayList
         try{
@@ -195,15 +194,15 @@ public class ReservationSystem {
                     case 4:
                         long checkinLong = Long.parseLong(parts[2]);
                         long checkoutLong = Long.parseLong(parts[3]);
-                        Date checkinDate = new Date(checkinLong * 1000);
-                        Date checkoutDate = new Date(checkoutLong * 1000);
+                        Date checkinDate = new Date(checkinLong);
+                        Date checkoutDate = new Date(checkoutLong);
                         reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), checkinDate, checkoutDate));
                         break;
                     case 5:
                         checkinLong = Long.parseLong(parts[3]);
                         checkoutLong = Long.parseLong(parts[4]);
-                        checkinDate = new Date(checkinLong * 1000);
-                        checkoutDate = new Date(checkoutLong * 1000);
+                        checkinDate = new Date(checkinLong);
+                        checkoutDate = new Date(checkoutLong);
                         reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),Integer.parseInt(parts[2]), checkinDate, checkoutDate));
                         break;
                     default:
@@ -454,15 +453,15 @@ public class ReservationSystem {
                     case 4:
                         long checkinLong = Long.parseLong(parts[2]);
                         long checkoutLong = Long.parseLong(parts[3]);
-                        Date checkinDate = new Date(checkinLong * 1000);
-                        Date checkoutDate = new Date(checkoutLong * 1000);
+                        Date checkinDate = new Date(checkinLong);
+                        Date checkoutDate = new Date(checkoutLong);
                         reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), checkinDate, checkoutDate));
                         break;
                     case 5:
                         checkinLong = Long.parseLong(parts[3]);
                         checkoutLong = Long.parseLong(parts[4]);
-                        checkinDate = new Date(checkinLong * 1000);
-                        checkoutDate = new Date(checkoutLong * 1000);
+                        checkinDate = new Date(checkinLong);
+                        checkoutDate = new Date(checkoutLong);
                         reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),Integer.parseInt(parts[2]), checkinDate, checkoutDate));
                         break;
                     default:
@@ -493,12 +492,13 @@ public class ReservationSystem {
                             boolean checkOverlap = (start.before(checkout) && end.after(checkin)) || (start.equals(checkin) && end.equals(checkout));
                             long startCheckIn = checkin.getTime();
                             long endCheckOut = checkout.getTime();
-                            if(!checkOverlap){
+                            
+                            if(checkOverlap == false) {
                                 totalMoney = room.getPrice_night_Room() * diffBetweenDays(startCheckIn, endCheckOut);
                                 payMoney = totalMoney + 0.08*totalMoney;
                                 BufferedWriter writer = new BufferedWriter(new FileWriter(reservationPath,true));
                                 writer.newLine();
-                                String str = String.format("%d,%d,%d,%d,%d",reservatedRooms.size()+1, acc.ID_Accommodation,room.getID_Room(),startCheckIn,endCheckOut);
+                                String str = String.format("%s,%s,%s,%s,%s",reservatedRooms.size()+1, acc.ID_Accommodation,room.getID_Room(),startCheckIn,endCheckOut);
                                 writer.write(str);
                                 writer.close();
                                 break;
@@ -529,7 +529,7 @@ public class ReservationSystem {
                                 payMoney = totalMoney + 0.08*totalMoney;
                                 BufferedWriter writer = new BufferedWriter(new FileWriter(reservationPath,true)); // can them try catch
                                 writer.newLine();
-                                String str = String.format("%d,%d,%d,%d,%d",reservatedRooms.size()+1, acc.ID_Accommodation,room.getID_Room(),startCheckIn,endCheckOut);
+                                String str = String.format("%s,%s,%s,%s,%s",reservatedRooms.size()+1, acc.ID_Accommodation,room.getID_Room(),startCheckIn,endCheckOut);
                                 writer.write(str);
                                 writer.close();
                                 break;

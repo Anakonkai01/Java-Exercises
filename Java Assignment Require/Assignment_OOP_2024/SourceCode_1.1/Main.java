@@ -28,6 +28,8 @@ public class Main {
 
         ReservationSystem ReservationSystem = new ReservationSystem(accPath, roomPath, roomInAccPath);
 
+        args = new String[] {"5"};
+
         for (String arg : args) {
             switch (arg) {
                 case "1":
