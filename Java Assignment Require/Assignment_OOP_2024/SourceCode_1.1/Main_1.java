@@ -25,7 +25,7 @@ public class Main_1 {
         if (!f.exists()) {
             f.mkdirs();
         }
-        args = new String[] { "4" }; // tu chinh sua
+        args = new String[] { "3" }; // tu chinh sua
         ReservationSystem ReservationSystem = new ReservationSystem(accPath, roomPath, roomInAccPath);
         for (String arg : args) {
             switch (arg) {

@@ -18,4 +18,3 @@ Hotel [17, 3, City Lights Hotel, 890 Downtown Ave, City Q]
 Resort [18, Seaside Escape Resort, 4, 901 Oceanfront Blvd, true, City R]
 Villa [19, Hilltop Haven Villa, 123 Hillside Dr, City S, true, true, true, true, 40, 560]
 CruiseShip [20, Tropical Oasis CruiseShip, 210 Palm Tree Ln, City T, true, true, true, true, false]
-  
