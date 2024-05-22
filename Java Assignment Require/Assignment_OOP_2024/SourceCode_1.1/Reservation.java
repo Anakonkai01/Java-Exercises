@@ -15,15 +15,7 @@ public class Reservation {
         this.checkin = checkin;
         this.checkout = checkout;
     }
-
-    // constructor tu dinh nghia cho luxury
-    public Reservation(int iD_reservation, int iD_accommodation, Date timestampStart, Date timestampEnd) {
-        this.reservationId = iD_reservation;
-        this.accId = iD_accommodation;
-        this.checkin = timestampStart;
-        this.checkout = timestampEnd;
-        this.roomId = -1; // if luxury => room  == -1
-    }
+    
 
     public int getReservationId() {
         return this.reservationId;

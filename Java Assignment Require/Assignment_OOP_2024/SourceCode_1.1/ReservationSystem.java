@@ -196,7 +196,7 @@ public class ReservationSystem {
                         long checkoutLong = Long.parseLong(parts[3]);
                         Date checkinDate = new Date(checkinLong);
                         Date checkoutDate = new Date(checkoutLong);
-                        reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), checkinDate, checkoutDate));
+                        reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),-1,checkinDate, checkoutDate));
                         break;
                     case 5:
                         checkinLong = Long.parseLong(parts[3]);
@@ -455,7 +455,7 @@ public class ReservationSystem {
                         long checkoutLong = Long.parseLong(parts[3]);
                         Date checkinDate = new Date(checkinLong);
                         Date checkoutDate = new Date(checkoutLong);
-                        reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), checkinDate, checkoutDate));
+                        reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),-1,checkinDate, checkoutDate));
                         break;
                     case 5:
                         checkinLong = Long.parseLong(parts[3]);
@@ -493,7 +493,7 @@ public class ReservationSystem {
                             long startCheckIn = checkin.getTime();
                             long endCheckOut = checkout.getTime();
                             
-                            if(checkOverlap == false) {
+                            if(!checkOverlap) {
                                 totalMoney = room.getPrice_night_Room() * diffBetweenDays(startCheckIn, endCheckOut);
                                 payMoney = totalMoney + 0.08*totalMoney;
                                 BufferedWriter writer = new BufferedWriter(new FileWriter(reservationPath,true));
