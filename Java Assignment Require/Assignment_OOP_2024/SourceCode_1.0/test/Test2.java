@@ -1,24 +1,28 @@
 package test;
 
-class Parent1 {
-    protected int a = 10;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
-}
+class Test2 {
 
-class Parent2 extends Parent1{
-    protected int b = 20;
-}
-
-class Child extends Parent2{
-    protected int c = 30;
-}
-public class Test2 {
     public static void main(String[] args) {
-        Child obj = new Child();
-        System.out.println(obj.a);
-        System.out.println(obj.b);
-        System.out.println(obj.c);
+        ArrayList array1 = new ArrayList<>();
 
+        array1.add(1);
+        array1.add(2);
+        array1.add(3);
+
+        ArrayList array2 = new ArrayList<>();
+        array2.add(2);
+        array2.add(3);
+
+        ArrayList array3 = new ArrayList<>();
+        array3.add(3);
+        
+        array1.retainAll(array2);
+        array1.retainAll(array3);
+
+        
+        System.out.println(array1);
     }
-    
 }
