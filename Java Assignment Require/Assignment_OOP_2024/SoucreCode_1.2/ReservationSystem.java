@@ -134,7 +134,6 @@ public class ReservationSystem {
         return acc;
     }
 
-
     // Requirement 2
     public ArrayList<Accommodation> searchForRoom(String city, int numOfPeople) {
         ArrayList<Accommodation> result = new ArrayList<>();
@@ -148,7 +147,6 @@ public class ReservationSystem {
                     for(Room room : b.rooms){
                         if(room.getMaximum_peoples_Room() >= numOfPeople){
                             common.add(b);
-                            break;
                         }
                     }
                 }
@@ -167,7 +165,6 @@ public class ReservationSystem {
             }
         });
 
-        // sort
         Collections.sort(common, new Comparator<Accommodation>() {
             @Override
             public int compare(Accommodation a1, Accommodation a2) {
@@ -182,10 +179,10 @@ public class ReservationSystem {
     // Requirement 3
     public ArrayList<Accommodation> searchForRoomByRange(String reservationPath, double priceFrom, double priceTo,
             Date checkin, Date checkout, String city, int numOfPeople) {
-        
         ArrayList<Accommodation> result = new ArrayList<>();
-        ArrayList<ReservationSystem> reservatedRooms = new ArrayList<>();
-        
+
+        ArrayList<Reservation> reservatedRooms = new ArrayList<>();
+
         // input data from reservation_3 to ArrayList
         try{
             BufferedReader reader = new BufferedReader(new FileReader(reservationPath));
@@ -197,16 +194,16 @@ public class ReservationSystem {
                     case 4:
                         long checkinLong = Long.parseLong(parts[2]);
                         long checkoutLong = Long.parseLong(parts[3]);
-                        Date checkinDate = new Date(checkinLong * 1000);
-                        Date checkoutDate = new Date(checkoutLong * 1000);
-                        reservatedRooms.add(new ReservatedRoom(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), checkinDate, checkoutDate));
+                        Date checkinDate = new Date(checkinLong);
+                        Date checkoutDate = new Date(checkoutLong);
+                        reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),-1,checkinDate, checkoutDate));
                         break;
                     case 5:
                         checkinLong = Long.parseLong(parts[3]);
                         checkoutLong = Long.parseLong(parts[4]);
-                        checkinDate = new Date(checkinLong * 1000);
-                        checkoutDate = new Date(checkoutLong * 1000);
-                        reservatedRooms.add(new ReservatedRoom(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),Integer.parseInt(parts[2]), checkinDate, checkoutDate));
+                        checkinDate = new Date(checkinLong);
+                        checkoutDate = new Date(checkoutLong);
+                        reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),Integer.parseInt(parts[2]), checkinDate, checkoutDate));
                         break;
                     default:
                         System.out.println("Error, invalid number of argument req3");
@@ -219,6 +216,10 @@ public class ReservationSystem {
             System.out.println("Error reader req3");
         }
 
+
+
+
+
         // find the accommodation for req3
         for(Accommodation a : accommodations) {
             if(a.city_Accommodation.equals(city)) {
@@ -227,21 +228,21 @@ public class ReservationSystem {
                     LuxuryAccommodation b = (LuxuryAccommodation) a;
                     if((b.price_night_LuxuryAccommodation >= priceFrom) && (b.price_night_LuxuryAccommodation <= priceTo)){
                         if((numOfPeople + 2 >= b.maximum_people_can_serve_LuxuryAccommodation) && (numOfPeople <= b.maximum_people_can_serve_LuxuryAccommodation)){
+                            boolean checkDoesRoom_InResevatedRoom = false;
                             for(Reservation reRoom : reservatedRooms) {
                                 // check ID Accommodation and check room == -1
-                                if((reRoom.ID_accommodation == b.ID_Accommodation) && (reRoom.ID_room == -1)){
-                                    Date start = new Date(reRoom.timestampStart * 1000);
-                                    Date end = new Date(reRoom.timestampEnd * 1000);
-
-                                    
+                                if((reRoom.getAccId() == b.ID_Accommodation) && (reRoom.getRoomId() == -1)){
+                                    checkDoesRoom_InResevatedRoom = true;
+                                    Date start = reRoom.getCheckin();
+                                    Date end = reRoom.getCheckout();
                                     boolean checkOverlap = (start.before(checkout) && end.after(checkin)) || (start.equals(checkin) && end.equals(checkout));
                                     if(!checkOverlap){
                                         result.add(b);
                                     }
                                 }
-                                else{
-                                    result.add(b);
-                                }
+                            }
+                            if(checkDoesRoom_InResevatedRoom == false){
+                                result.add(b);   
                             }
                         }
                     }
@@ -252,22 +253,20 @@ public class ReservationSystem {
                     for(Room room : b.getRooms()){
                         if(room.getPrice_night_Room() >= priceFrom && room.getPrice_night_Room() <= priceTo){
                             if((numOfPeople + 2 >= room.getMaximum_peoples_Room()) && (numOfPeople <= room.getMaximum_peoples_Room())){
-                                for(ReservatedRoom reRoom : reservatedRooms) {
-                                    // check ID Accommodation and check room == -1
-                                    if((reRoom.ID_accommodation == b.ID_Accommodation) && (reRoom.ID_room == room.getID_Room())){
-                                        Date start = new Date(reRoom.timestampStart * 1000);
-                                        Date end = new Date(reRoom.timestampEnd * 1000);
-                                        
-                                        System.out.println(b.getRooms());
-
+                                boolean checkDoesRoom_InResevated = false;
+                                for(Reservation reRoom : reservatedRooms) {
+                                    if((reRoom.getAccId() == b.ID_Accommodation) && (reRoom.getRoomId() == room.getID_Room())){
+                                        checkDoesRoom_InResevated = true;
+                                        Date start = reRoom.getCheckin();
+                                        Date end = reRoom.getCheckout();
                                         boolean checkOverlap = (start.before(checkout) && end.after(checkin)) || (start.equals(checkin) && end.equals(checkout));
                                         if(!checkOverlap){
                                             result.add(b);
                                         }
                                     }
-                                    else{
-                                        result.add(b);
-                                    }
+                                }
+                                if(checkDoesRoom_InResevated == false){
+                                    result.add(b);
                                 }
                             }
                         }
@@ -276,223 +275,136 @@ public class ReservationSystem {
             }
         }
 
-        // make it become unique solution
-        Set<Integer> idSet = new HashSet<>();
-        ArrayList<Accommodation> uniqueResult = new ArrayList<>();
-        for (Accommodation a : result) {
-            if (idSet.add(a.ID_Accommodation)) {
-                uniqueResult.add(a);
-            }
-        }
-
         // sort 
-        Collections.sort(uniqueResult, new Comparator<Accommodation>() {
+        Collections.sort(result, new Comparator<Accommodation>() {
             @Override
             public int compare(Accommodation a1, Accommodation a2) {
                 return a2.getName_Accommodation().compareTo(a1.getName_Accommodation());
             }
         });
-
-        return uniqueResult;
-    }
-    //static class for Requirement 3
-    static class ReservatedRoom {
-        private int ID_reservation;
-        private int ID_accommodation;
-        private int ID_room;
-        private long timestampStart;
-        private long timestampEnd;
-
-        public ReservatedRoom(int ID_reservation, int ID_accommodation, int ID_room, long timestampStart,
-                              long timestampEnd) {
-            this.ID_reservation = ID_reservation;
-            this.ID_accommodation = ID_accommodation;
-            this.ID_room = ID_room;
-            this.timestampStart = timestampStart;
-            this.timestampEnd = timestampEnd;
-        }
-
         
-        public ReservatedRoom(int iD_reservation, int iD_accommodation, long timestampStart, long timestampEnd) {
-            ID_reservation = iD_reservation;
-            ID_accommodation = iD_accommodation;
-            this.timestampStart = timestampStart;
-            this.timestampEnd = timestampEnd;
-            this.ID_room = -1; // if luxury => room  == -1
-        }
-
-
-        @Override
-        public String toString() {
-            return "ReservatedRoom [ID_reservation=" + ID_reservation + ", ID_accommodation=" + ID_accommodation
-                    + ", ID_room=" + ID_room + ", timestampStart=" + timestampStart + ", timestampEnd=" + timestampEnd
-                    + "]";
-        }   
-        
+        return result;
     }
 
-    // Requirement 4
     public ArrayList<Accommodation> searchInAdvance(String city, Integer numOfPeople, String roomType,
-            Boolean privatePool, Integer starQuality, Boolean freeBreakfast, Boolean privateBar) {
-        
-        /* 2 tham số khác city và numOfPeople thì ko xét ???? */
+        Boolean privatePool, Integer starQuality, Boolean freeBreakfast, Boolean privateBar) {
+    ArrayList<Accommodation> finalFilter = new ArrayList<>();
+    HashSet<Accommodation> luxuryAccommodations = new HashSet<>();
+    HashSet<Room> commonRooms = new HashSet<>();
 
-        // roomType (COMMON)
-        // privatePool (RESORT, LUXURY)
-        // starQuality (HOTEL, RESORT)
-        // freeBreakfast (LUXURY)
-        // privateBar (CRUISE SHIP)
+    // Phần 1: Xử lý LuxuryAccommodation
+    for (Accommodation a : accommodations) {
+        if (a.getCity_Accommodation().equals(city) && a instanceof LuxuryAccommodation) {
+            boolean matches = true;
 
-        
-
-        ArrayList<Accommodation> filterList1 = new ArrayList<>();
-        ArrayList<Accommodation> filterList2 = new ArrayList<>();
-        ArrayList<Accommodation> filterList3 = new ArrayList<>();
-        ArrayList<Accommodation> filterList4 = new ArrayList<>();
-        ArrayList<Accommodation> filterList5 = new ArrayList<>();
-        
-
-        ArrayList<Boolean> checkArgumentNull = new ArrayList<>();
-
-        ArrayList<Accommodation> finalFilter = new ArrayList<>();
-
-        for(Accommodation a : accommodations){
-            // check city
-            if(a.getCity_Accommodation().equals(city)){
-                if(roomType != null){
-                    checkArgumentNull.add(false);
-                    if(a instanceof CommonAccommodation){
-                    CommonAccommodation b = (CommonAccommodation) a;
-                        for(Room room : b.getRooms()){
-                            if((room.getGenre_Room().equals(roomType)) && (numOfPeople <= room.getMaximum_peoples_Room())){
-                                filterList1.add(b);
-                                // tim thay 1 room roi thi break lun ko can tim them nua vi da co room thoai man dieu kien
-                                break;
-                            }
-                        }
-                    }
-                }
-                else{
-                    checkArgumentNull.add(true);
-                }
-                if(privatePool != null){
-                    // check luxury 
-                    checkArgumentNull.add(false);
-                    if(a instanceof LuxuryAccommodation){
-                        LuxuryAccommodation b = (LuxuryAccommodation) a;
-                        if((b.isIs_pool_available_LuxuryAccommodation() == privatePool) && (b.maximum_people_can_serve_LuxuryAccommodation >= numOfPeople)){
-                            filterList2.add(b);
-                        }
-                    }
-                    // check resort
-                    if(a instanceof Resort){
-                        Resort b = (Resort) a;
-                        for(Room room: b.getRooms()){
-                            if((b.isIs_pool_available_Resort() == privatePool) && (room.getMaximum_peoples_Room() >= numOfPeople)){
-                                filterList2.add(b);
-                                // tim thay 1 room roi thi break lun ko can tim them nua vi da co room thoai man dieu kien
-                                break;
-                            }
-                        }
-                    }
-                }
-                else{
-                    checkArgumentNull.add(true);
-                }
-
-                if(starQuality != null){
-                    checkArgumentNull.add(false);
-                    if(a instanceof Hotel){
-                        Hotel b = (Hotel) a;
-                        if(b.getRating_stars_Hotel() == starQuality){
-                            filterList3.add(b);
-                        }
-                    }
-                    if(a instanceof Resort){
-                        Resort b = (Resort) a;
-                        if(b.getRating_stars_Resort() == starQuality){
-                            filterList3.add(b);
-                        }
-                    }
-                }
-                else{
-                    checkArgumentNull.add(true);
-                }
-
-                if(freeBreakfast != null){
-                    checkArgumentNull.add(false);
-                    if(a instanceof LuxuryAccommodation){
-                        LuxuryAccommodation b = (LuxuryAccommodation) a;
-                        if(b.isIs_free_breakfast_LuxuryAccommodation() == freeBreakfast){
-                            filterList4.add(b);
-                        }
-                    }
-                }
-                else{
-                    checkArgumentNull.add(true);
-                }
-
-                if(privateBar != null){
-                    checkArgumentNull.add(false);
-                    if(a instanceof CruiseShip){
-                        CruiseShip b = (CruiseShip) a;
-                        if(b.isIs_private_bar_CruiseShip() == privateBar){
-                            filterList5.add(b);
-                        }
-                    }
-                }
-                else{
-                    checkArgumentNull.add(true);
+            if (privatePool != null) {
+                LuxuryAccommodation la = (LuxuryAccommodation) a;
+                if (la.isIs_pool_available_LuxuryAccommodation() != privatePool ||
+                        (numOfPeople != null && numOfPeople > la.maximum_people_can_serve_LuxuryAccommodation)) {
+                    matches = false;
                 }
             }
-        }
-        
 
-        List<List<Accommodation>> nonNullLists = new ArrayList<>();
-
-        for (int i = 0; i < checkArgumentNull.size(); i++) {
-            if (!checkArgumentNull.get(i)) {
-                switch (i) {
-                    case 0:
-                        nonNullLists.add(filterList1);
-                        break;
-                    case 1:
-                        nonNullLists.add(filterList2);
-                        break;
-                    case 2:
-                        nonNullLists.add(filterList3);
-                        break;
-                    case 3:
-                        nonNullLists.add(filterList4);
-                        break;
-                    case 4:
-                        nonNullLists.add(filterList5);
-                        break;
+            if (starQuality != null) {
+                if (a instanceof Hotel) {
+                    Hotel h = (Hotel) a;
+                    if (h.getRating_stars_Hotel() != starQuality) {
+                        matches = false;
+                    }
+                } else if (a instanceof Resort) {
+                    Resort r = (Resort) a;
+                    if (r.getRating_stars_Resort() != starQuality) {
+                        matches = false;
+                    }
+                } else {
+                    matches = false;
                 }
             }
-        }
 
-        // Tạo một Set chứa các Accommodation chung
-        Set<Accommodation> commonAccommodationsSet = new HashSet<>();
+            if (freeBreakfast != null) {
+                LuxuryAccommodation la = (LuxuryAccommodation) a;
+                if (la.isIs_free_breakfast_LuxuryAccommodation() != freeBreakfast) {
+                    matches = false;
+                }
+            }
 
-        // Thêm các Accommodation từ danh sách đầu tiên không null vào Set
-        if (!nonNullLists.isEmpty()) {
-            commonAccommodationsSet.addAll(nonNullLists.get(0));
-        }
+            if (privateBar != null && a instanceof CruiseShip) {
+                CruiseShip cs = (CruiseShip) a;
+                if (cs.isIs_private_bar_CruiseShip() != privateBar ||
+                        (numOfPeople != null && numOfPeople > cs.getMaximum_people_can_serve_LuxuryAccommodation())) {
+                    matches = false;
+                }
+            }
 
-        // Duyệt qua các danh sách còn lại và loại bỏ các Accommodation không tồn tại trong ít nhất một danh sách khác
-        for (int i = 1; i < nonNullLists.size(); i++) {
-            commonAccommodationsSet.retainAll(nonNullLists.get(i));
+            if (matches) {
+                luxuryAccommodations.add(a);
+            }
         }
-        finalFilter.addAll(commonAccommodationsSet);
-        return finalFilter;
     }
+
+    // Phần 2: Xử lý CommonAccommodation (Hotel, Resort)
+    for (Accommodation a : accommodations) {
+        if (a.getCity_Accommodation().equals(city) && a instanceof CommonAccommodation) {
+            CommonAccommodation b = (CommonAccommodation) a;
+            for (Room room : b.getRooms()) {
+                boolean isValid = true;
+                if (roomType != null && !room.getGenre_Room().equals(roomType)) {
+                    isValid = false;
+                }
+                if (numOfPeople != null && numOfPeople > room.getMaximum_peoples_Room()) {
+                    isValid = false;
+                }
+                if (starQuality != null) {
+                    if (a instanceof Hotel) {
+                        Hotel h = (Hotel) a;
+                        if (h.getRating_stars_Hotel() != starQuality) {
+                            isValid = false;
+                        }
+                    } else if (a instanceof Resort) {
+                        Resort r = (Resort) a;
+                        if (r.getRating_stars_Resort() != starQuality) {
+                            isValid = false;
+                        }
+                    } else {
+                        isValid = false;
+                    }
+                }
+                if (isValid) {
+                    commonRooms.add(room);
+                }
+            }
+        }
+    }
+
+    // Lọc các phòng chung giữa các điều kiện
+    HashSet<Accommodation> commonAccommodationsSet = new HashSet<>();
+    for (Room room : commonRooms) {
+        Accommodation a = room.getAccommodation();
+        if (a instanceof CommonAccommodation) {
+            CommonAccommodation b = (CommonAccommodation) a;
+            for (Room r : b.getRooms()) {
+                if (commonRooms.contains(r)) {
+                    commonAccommodationsSet.add(b);
+                    break;
+                }
+            }
+        }
+    }
+
+    // Thêm các kết quả của luxury và common vào danh sách cuối cùng
+    finalFilter.addAll(luxuryAccommodations);
+    finalFilter.addAll(commonAccommodationsSet);
+
+    return finalFilter;
+}
+
+
+
 
     // Requirement 5
     public double performReservation(String reservationPath, Accommodation acc, Room room, Date checkin, Date checkout)
             throws Exception {
-        
-        ArrayList<ReservatedRoom> reservatedRooms = new ArrayList<>();
+        ArrayList<Reservation> reservatedRooms = new ArrayList<>();
 
         // input data from reservation_5 to ArrayList
         try{
@@ -503,10 +415,18 @@ public class ReservationSystem {
                 int numberArgument = parts.length;
                 switch (numberArgument) {
                     case 4:
-                        reservatedRooms.add(new ReservatedRoom(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Long.parseLong(parts[2]), Long.parseLong(parts[3])));
+                        long checkinLong = Long.parseLong(parts[2]);
+                        long checkoutLong = Long.parseLong(parts[3]);
+                        Date checkinDate = new Date(checkinLong);
+                        Date checkoutDate = new Date(checkoutLong);
+                        reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),-1,checkinDate, checkoutDate));
                         break;
                     case 5:
-                        reservatedRooms.add(new ReservatedRoom(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),Integer.parseInt(parts[2]), Long.parseLong(parts[3]), Long.parseLong(parts[4])));
+                        checkinLong = Long.parseLong(parts[3]);
+                        checkoutLong = Long.parseLong(parts[4]);
+                        checkinDate = new Date(checkinLong);
+                        checkoutDate = new Date(checkoutLong);
+                        reservatedRooms.add(new Reservation(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),Integer.parseInt(parts[2]), checkinDate, checkoutDate));
                         break;
                     default:
                         System.out.println("Error, invalid number of argument req5");
@@ -527,24 +447,24 @@ public class ReservationSystem {
             if(a instanceof CommonAccommodation){
                 CommonAccommodation b = (CommonAccommodation) a;
                 if(b.getID_Accommodation() == acc.ID_Accommodation){
-                    for(ReservatedRoom reRoom : reservatedRooms) {
-                        if(reRoom.ID_room == room.getID_Room()){
-                            Date start = new Date(reRoom.timestampStart * 1000);
-                            Date end = new Date(reRoom.timestampEnd * 1000);
+                    for(Reservation reRoom : reservatedRooms) {
+                        if(reRoom.getRoomId() == room.getID_Room()){
+                            checkDoesRoom_InResevated = true; // check in resevation 
+                            Date start = reRoom.getCheckin();
+                            Date end = reRoom.getCheckout();
                             
                             boolean checkOverlap = (start.before(checkout) && end.after(checkin)) || (start.equals(checkin) && end.equals(checkout));
                             long startCheckIn = checkin.getTime();
                             long endCheckOut = checkout.getTime();
-                            if(!checkOverlap){
-                                checkDoesRoom_InResevated = true;
+                            
+                            if(!checkOverlap) {
                                 totalMoney = room.getPrice_night_Room() * diffBetweenDays(startCheckIn, endCheckOut);
                                 payMoney = totalMoney + 0.08*totalMoney;
                                 BufferedWriter writer = new BufferedWriter(new FileWriter(reservationPath,true));
                                 writer.newLine();
-                                String str = String.format("%d,%d,%d,%d,%d",reservatedRooms.size()+1, acc.ID_Accommodation,room.getID_Room(),startCheckIn,endCheckOut);
+                                String str = String.format("%s,%s,%s,%s,%s",reservatedRooms.size()+1, acc.ID_Accommodation,room.getID_Room(),startCheckIn,endCheckOut);
                                 writer.write(str);
                                 writer.close();
-                                // ko nen thoat vong lap vi co the 1 room nhung 2 accommodation
                                 break;
                             }
                             else{
@@ -567,14 +487,13 @@ public class ReservationSystem {
                     if(b.ID_Accommodation == acc.ID_Accommodation){
                         for(Room r : b.getRooms()){
                             if((r.getID_Room() == room.getID_Room())){
-                                checkDoesRoom_InResevated = true;
                                 long startCheckIn = checkin.getTime();
                                 long endCheckOut = checkout.getTime();
                                 totalMoney = room.getPrice_night_Room() * diffBetweenDays(startCheckIn, endCheckOut);
                                 payMoney = totalMoney + 0.08*totalMoney;
-                                BufferedWriter writer = new BufferedWriter(new FileWriter(reservationPath,true));
+                                BufferedWriter writer = new BufferedWriter(new FileWriter(reservationPath,true)); // can them try catch
                                 writer.newLine();
-                                String str = String.format("%d,%d,%d,%d,%d",reservatedRooms.size()+1, acc.ID_Accommodation,room.getID_Room(),startCheckIn,endCheckOut);
+                                String str = String.format("%s,%s,%s,%s,%s",reservatedRooms.size()+1, acc.ID_Accommodation,room.getID_Room(),startCheckIn,endCheckOut);
                                 writer.write(str);
                                 writer.close();
                                 break;
@@ -582,11 +501,9 @@ public class ReservationSystem {
                         }
                     }
                 }
-                if(checkDoesRoom_InResevated == true){
-                    break;
-                }
             }
         }
+        
         return payMoney;
     }
 
@@ -608,17 +525,4 @@ public class ReservationSystem {
         long timeWithoutTime = time - (time % (24 * 60 * 60 * 1000));
         return new Date(timeWithoutTime);
     }
-
-    // cua em
-    // public long diffBetweenDays(long dateStart, long dateEnd) {
-    //     Date startDate = new Date(dateStart * 1000);
-    //     Date endDate = new Date(dateEnd * 1000);
-
-    //     long startTime = startDate.getTime();
-    //     long endTime = endDate.getTime();
-
-    //     double timeDifference = endTime - startTime;
-    //     double daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-    //     return (long) Math.ceil(daysDifference);
-    // }
 }

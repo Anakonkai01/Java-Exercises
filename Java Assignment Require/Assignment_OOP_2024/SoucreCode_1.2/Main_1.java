@@ -3,31 +3,30 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-public class Main {
+public class Main_1 {
     public static String[] REQUIREMENT_OUTPUT_FILES = new String[] {
-            "./output/Req1.txt",
-            "./output/Req2_1.txt",
-            "./output/Req2_2.txt",
-            "./output/Req3_1.txt",
-            "./output/Req3_2.txt",
-            "./output/Req4_1.txt",
-            "./output/Req4_2.txt",
-            "./output/Req5.txt",
-            "./output/Req6.txt",
+            "./output_1/Req1.txt",
+            "./output_1/Req2_1.txt",
+            "./output_1/Req2_2.txt",
+            "./output_1/Req3_1.txt",
+            "./output_1/Req3_2.txt",
+            "./output_1/Req4_1.txt",
+            "./output_1/Req4_2.txt",
+            "./output_1/Req5.txt",
+            "./output_1/Req6.txt",
     };
 
     public static void main(String[] args) {
-        String roomPath = "data/room_type.csv";
-        String accPath = "data/accommodation.csv";
-        String roomInAccPath = "data/room_in_accommodation.csv";
+        String roomPath = "data_1/room_type.csv";
+        String accPath = "data_1/accommodation.csv";
+        String roomInAccPath = "data_1/room_in_accommodation.csv";
 
-        File f = new File("./output");
+        File f = new File("./output_1");
         if (!f.exists()) {
             f.mkdirs();
         }
 
         ReservationSystem ReservationSystem = new ReservationSystem(accPath, roomPath, roomInAccPath);
-
         for (String arg : args) {
             switch (arg) {
                 case "1":
@@ -44,10 +43,10 @@ public class Main {
                     break;
                 case "3":
                     // requirement 3
-                    List<Accommodation> req3_1 = ReservationSystem.searchForRoomByRange("data/reservation_3.csv", 10,
+                    List<Accommodation> req3_1 = ReservationSystem.searchForRoomByRange("data_1/reservation_3.csv", 10,
                             3000,
                             new Date(1713512750), new Date(1713771950), "City H", 1);
-                    List<Accommodation> req3_2 = ReservationSystem.searchForRoomByRange("data/reservation_3.csv", 10,
+                    List<Accommodation> req3_2 = ReservationSystem.searchForRoomByRange("data_1/reservation_3.csv", 10,
                             3000,
                             new Date(1713512750), new Date(1713771950), "City B", 1);
                     writeFile(REQUIREMENT_OUTPUT_FILES[3], req3_1);
@@ -61,20 +60,6 @@ public class Main {
                             5, true, null);
                     writeFile(REQUIREMENT_OUTPUT_FILES[5], req4_1);
                     writeFile(REQUIREMENT_OUTPUT_FILES[6], req4_2);
-                    break;
-                case "5":
-                    // requirement 5
-                    ArrayList<String> req5 = new ArrayList<>();
-                    try {
-                        Accommodation acc = new Homestay(1, "Cozy Homestay", "123 Main St", "City A", 4.8f);
-                        Room room = new Room(1, "Single Room", 1, "Standard", 1, 1, 20.0, 50.0);
-                        double totalPrice = ReservationSystem.performReservation("data/reservation_5.csv", acc, room,
-                                new Date(1713368812), new Date(1713398812));
-                        req5.add(String.valueOf(totalPrice));
-                    } catch (Exception e) {
-                        req5.add(String.valueOf(e.getMessage()));
-                    }
-                    writeFile(REQUIREMENT_OUTPUT_FILES[7], req5);
                     break;
             }
         }
