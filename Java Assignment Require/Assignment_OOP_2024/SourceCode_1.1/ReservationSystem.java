@@ -280,497 +280,120 @@ public class ReservationSystem {
         return result;
     }
 
-    // // Requirement 4
-    // public ArrayList<Accommodation> searchInAdvance(String city, Integer numOfPeople, String roomType,
-    //         Boolean privatePool, Integer starQuality, Boolean freeBreakfast, Boolean privateBar) {
-    //     // ArrayList<Accommodation> filterList1 = new ArrayList<>();
-    //     // ArrayList<Accommodation> filterList2 = new ArrayList<>();
-    //     // ArrayList<Accommodation> filterList3 = new ArrayList<>();
-    //     // ArrayList<Accommodation> filterList4 = new ArrayList<>();
-    //     // ArrayList<Accommodation> filterList5 = new ArrayList<>();
-        
-
-    //     // ArrayList<Boolean> checkArgumentNull = new ArrayList<>();
-
-    //     // ArrayList<Accommodation> finalFilter = new ArrayList<>();
-
-    //     // for(Accommodation a : accommodations){
-    //     //     // check city
-    //     //     if(a.getCity_Accommodation().equals(city)){
-    //     //         if(roomType != null){
-    //     //             checkArgumentNull.add(false);
-    //     //             if(a instanceof CommonAccommodation){
-    //     //             CommonAccommodation b = (CommonAccommodation) a;
-    //     //                 for(Room room : b.getRooms()){
-    //     //                     if((room.getGenre_Room().equals(roomType)) && (numOfPeople <= room.getMaximum_peoples_Room())){
-    //     //                         filterList1.add(room);
-    //     //                     }
-    //     //                 }
-    //     //             }
-    //     //         }
-    //     //         else{
-    //     //             checkArgumentNull.add(true);
-    //     //         }
-    //     //         if(privatePool != null){
-    //     //             // check luxury 
-    //     //             checkArgumentNull.add(false);
-    //     //             if(a instanceof LuxuryAccommodation){
-    //     //                 LuxuryAccommodation b = (LuxuryAccommodation) a;
-    //     //                 if((b.isIs_pool_available_LuxuryAccommodation() == privatePool) && (b.maximum_people_can_serve_LuxuryAccommodation >= numOfPeople)){
-    //     //                     filterList2.add(b);
-    //     //                 }
-    //     //             }
-    //     //             // check resort
-    //     //             if(a instanceof Resort){
-    //     //                 Resort b = (Resort) a;
-    //     //                 for(Room room: b.getRooms()){
-    //     //                     if((b.isIs_pool_available_Resort() == privatePool) && (room.getMaximum_peoples_Room() >= numOfPeople)){
-    //     //                         filterList2.add(b);
-    //     //                     }
-    //     //                 }
-    //     //             }
-    //     //         }
-    //     //         else{
-    //     //             checkArgumentNull.add(true);
-    //     //         }
-
-    //     //         if(starQuality != null){
-    //     //             checkArgumentNull.add(false);
-    //     //             if(a instanceof Hotel){
-    //     //                 Hotel b = (Hotel) a;
-    //     //                 if((b.getRating_stars_Hotel() == starQuality) ){
-    //     //                     for(Room room : b.getRooms()){
-    //     //                         if(room.getMaximum_peoples_Room() >= numOfPeople){
-    //     //                             filterList3.add(b);
-    //     //                         }
-    //     //                     }
-    //     //                 }
-    //     //             }
-    //     //             if(a instanceof Resort){
-    //     //                 Resort b = (Resort) a;
-    //     //                 if(b.getRating_stars_Resort() == starQuality){
-    //     //                     for(Room room : b.getRooms()){
-    //     //                         if(room.getMaximum_peoples_Room() >= numOfPeople){
-    //     //                             filterList3.add(b);
-    //     //                         }
-    //     //                     }
-    //     //                 }
-    //     //             }
-    //     //         }
-    //     //         else{
-    //     //             checkArgumentNull.add(true);
-    //     //         }
-
-    //     //         if(freeBreakfast != null){
-    //     //             checkArgumentNull.add(false);
-    //     //             if(a instanceof LuxuryAccommodation){
-    //     //                 LuxuryAccommodation b = (LuxuryAccommodation) a;
-    //     //                 if((b.isIs_free_breakfast_LuxuryAccommodation() == freeBreakfast) && (b.maximum_people_can_serve_LuxuryAccommodation >= numOfPeople)){
-    //     //                     filterList4.add(b);
-    //     //                 }
-    //     //             }
-    //     //         }
-    //     //         else{
-    //     //             checkArgumentNull.add(true);
-    //     //         }
-
-    //     //         if(privateBar != null){
-    //     //             checkArgumentNull.add(false);
-    //     //             if(a instanceof CruiseShip){
-    //     //                 LuxuryAccommodation b = (LuxuryAccommodation) a;
-    //     //                 if(b.getMaximum_people_can_serve_LuxuryAccommodation() >= numOfPeople){
-    //     //                     CruiseShip c = (CruiseShip) b;
-    //     //                     if(c.isIs_private_bar_CruiseShip() == privateBar){
-    //     //                         filterList5.add(c);
-    //     //                     }
-    //     //                 }
-    //     //             }
-    //     //         }
-    //     //         else{
-    //     //             checkArgumentNull.add(true);
-    //     //         }
-    //     //     }
-    //     // }
-        
-
-    //     // ArrayList<ArrayList<Accommodation>> nonNullLists = new ArrayList<>();
-
-    //     // for (int i = 0; i < checkArgumentNull.size(); i++) {
-    //     //     if (!checkArgumentNull.get(i)) {
-    //     //         switch (i) {
-    //     //             case 0:
-    //     //                 nonNullLists.add(filterList1);
-    //     //                 break;
-    //     //             case 1:
-    //     //                 nonNullLists.add(filterList2);
-    //     //                 break;
-    //     //             case 2:
-    //     //                 nonNullLists.add(filterList3);
-    //     //                 break;
-    //     //             case 3:
-    //     //                 nonNullLists.add(filterList4);
-    //     //                 break;
-    //     //             case 4:
-    //     //                 nonNullLists.add(filterList5);
-    //     //                 break;
-    //     //         }
-    //     //     }
-    //     // }
-
-    //     // ArrayList<Accommodation> commonAccommodationsSet = new ArrayList<>();
-
-    //     // if (!nonNullLists.isEmpty()) {
-    //     //     commonAccommodationsSet.addAll(nonNullLists.get(0));
-    //     // }
-
-    //     // for (int i = 1; i < nonNullLists.size(); i++) {
-    //     //     commonAccommodationsSet.retainAll(nonNullLists.get(i));
-    //     // }
-        
-    //     // finalFilter.addAll(commonAccommodationsSet);
-    //     // return finalFilter;
-
-    //     HashMap<Accommodation,ArrayList<Room>> filterList1 = new HashMap<>();
-    //     HashMap<Accommodation,ArrayList<Room>> filterList2 = new HashMap<>();
-    //     HashMap<Accommodation,ArrayList<Room>> filterList3 = new HashMap<>();
-    //     HashMap<Accommodation,ArrayList<Room>> filterList4 = new HashMap<>();
-    //     HashMap<Accommodation,ArrayList<Room>> filterList5 = new HashMap<>();
-
-
-    //     ArrayList<Boolean> checkArgumentNull = new ArrayList<>();
-
-    //     for(Accommodation a : accommodations){
-    //         // check city
-    //         if(a.getCity_Accommodation().equals(city)){
-    //             if(roomType != null){
-    //                 checkArgumentNull.add(false);
-    //                 if(a instanceof CommonAccommodation){
-    //                 CommonAccommodation b = (CommonAccommodation) a;
-    //                     for(Room room : b.getRooms()){
-    //                         if((room.getGenre_Room().equals(roomType)) && (numOfPeople <= room.getMaximum_peoples_Room())){
-    //                             if (filterList1.containsKey(a)) {
-    //                                 filterList1.get(a).add(room);
-    //                             } else {
-    //                                 ArrayList<Room> list = new ArrayList<>();
-    //                                 list.add(room);
-    //                                 filterList1.put(a, list);
-    //                             }       
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //             else{
-    //                 checkArgumentNull.add(true);
-    //             }
-    //             if(privatePool != null){
-    //                 // check luxury 
-    //                 checkArgumentNull.add(false);
-    //                 if(a instanceof LuxuryAccommodation){
-    //                     LuxuryAccommodation b = (LuxuryAccommodation) a;
-    //                     if((b.isIs_pool_available_LuxuryAccommodation() == privatePool) && (b.maximum_people_can_serve_LuxuryAccommodation >= numOfPeople)){
-    //                         ArrayList<Room> list = new ArrayList<>();
-    //                         list.add(new Room(-1, "null", -1, "null", -1, -1, -1, -1));
-    //                         filterList2.put(a,list);
-    //                     }
-    //                 }
-    //                 // check resort
-    //                 if(a instanceof Resort){
-    //                     Resort b = (Resort) a;
-    //                     for(Room room: b.getRooms()){
-    //                         if((b.isIs_pool_available_Resort() == privatePool) && (room.getMaximum_peoples_Room() >= numOfPeople)){
-    //                             if (filterList2.containsKey(a)) {
-    //                                 filterList2.get(a).add(room);
-    //                             } else {
-    //                                 ArrayList<Room> list = new ArrayList<>();
-    //                                 list.add(room);
-    //                                 filterList2.put(a, list);
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //             else{
-    //                 checkArgumentNull.add(true);
-    //             }
-
-    //             if(starQuality != null){
-    //                 checkArgumentNull.add(false);
-    //                 if(a instanceof Hotel){
-    //                     Hotel b = (Hotel) a;
-    //                     if((b.getRating_stars_Hotel() == starQuality) ){
-    //                         for(Room room : b.getRooms()){
-    //                             if(room.getMaximum_peoples_Room() >= numOfPeople){
-    //                                 if (filterList3.containsKey(a)) {
-    //                                     filterList3.get(a).add(room);
-    //                                 } else {
-    //                                     ArrayList<Room> list = new ArrayList<>();
-    //                                     list.add(room);
-    //                                     filterList3.put(a, list);
-    //                                 }
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //                 if(a instanceof Resort){
-    //                     Resort b = (Resort) a;
-    //                     if(b.getRating_stars_Resort() == starQuality){
-    //                         for(Room room : b.getRooms()){
-    //                             if(room.getMaximum_peoples_Room() >= numOfPeople){
-    //                                 if (filterList3.containsKey(a)) {
-    //                                     filterList3.get(a).add(room);
-    //                                 } else {
-    //                                     ArrayList<Room> list = new ArrayList<>();
-    //                                     list.add(room);
-    //                                     filterList3.put(a, list);
-    //                                 }
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //             else{
-    //                 checkArgumentNull.add(true);
-    //             }
-
-    //             if(freeBreakfast != null){
-    //                 checkArgumentNull.add(false);
-    //                 if(a instanceof LuxuryAccommodation){
-    //                     LuxuryAccommodation b = (LuxuryAccommodation) a;
-    //                     if((b.isIs_free_breakfast_LuxuryAccommodation() == freeBreakfast) && (b.maximum_people_can_serve_LuxuryAccommodation >= numOfPeople)){
-    //                         ArrayList<Room> list = new ArrayList<>();
-    //                         list.add(new Room(-1, "null", -1, "null", -1, -1, -1, -1));
-    //                         filterList4.put(a,list);
-    //                     }
-    //                 }
-    //             }
-    //             else{
-    //                 checkArgumentNull.add(true);
-    //             }
-
-    //             if(privateBar != null){
-    //                 checkArgumentNull.add(false);
-    //                 if(a instanceof CruiseShip){
-    //                     LuxuryAccommodation b = (LuxuryAccommodation) a;
-    //                     if(b.getMaximum_people_can_serve_LuxuryAccommodation() >= numOfPeople){
-    //                         CruiseShip c = (CruiseShip) b;
-    //                         if(c.isIs_private_bar_CruiseShip() == privateBar){
-    //                             ArrayList<Room> list = new ArrayList<>();
-    //                             list.add(new Room(-1, "null", -1, "null", -1, -1, -1, -1));
-    //                             filterList5.put(a,list);
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //             else{
-    //                 checkArgumentNull.add(true);
-    //             }
-    //         }
-    //     }
-
-    //     ArrayList<HashMap<Accommodation,ArrayList<Room>>> nonNullLists = new ArrayList<>();
-
-    //     for (int i = 0; i < checkArgumentNull.size(); i++) {
-    //         if (!checkArgumentNull.get(i)) {
-    //             switch (i) {
-    //                 case 0:
-    //                     nonNullLists.add(filterList1);
-    //                     break;
-    //                 case 1:
-    //                     nonNullLists.add(filterList2);
-    //                     break;
-    //                 case 2:
-    //                     nonNullLists.add(filterList3);
-    //                     break;
-    //                 case 3:
-    //                     nonNullLists.add(filterList4);
-    //                     break;
-    //                 case 4:
-    //                     nonNullLists.add(filterList5);
-    //                     break;
-    //             }
-    //         }
-    //     }
-
-    //     HashMap<Accommodation,ArrayList<Room>> commonAccommodationsSet = new HashMap<>();
-
-    //     if (!nonNullLists.isEmpty()) {
-    //         commonAccommodationsSet.putAll(nonNullLists.get(0));
-    //     }
-
-
-    //     // Duyệt qua từng cặp (CommonAccommodation, Room list) trong hashTable đầu tiên
-    //     for (CommonAccommodation acc : commonAccommodationsSet.keySet()) {
-    //         ArrayList<Room> baseRooms = commonAccommodationsSet.get(acc);
-
-    //         // Tạo danh sách các phòng giao nhau
-    //         ArrayList<Room> intersectionRooms = new ArrayList<>(baseRooms);
-
-    //         // Kiểm tra xem các phòng này có tồn tại trong các hashTable khác không
-    //         boolean isCommon = true;
-
-    //         for (int i = 1; i < hashTables.length; i++) {
-    //             HashMap<CommonAccommodation, ArrayList<Room>> currentTable = hashTables[i];
-    //             ArrayList<Room> currentRooms = currentTable.get(acc);
-
-    //             if (currentRooms == null) {
-    //                 isCommon = false;
-    //                 break;
-    //             }
-
-    //             // Lấy giao của các phòng
-    //             intersectionRooms.retainAll(currentRooms);
-
-    //             if (intersectionRooms.isEmpty()) {
-    //                 isCommon = false;
-    //                 break;
-    //             }
-    //         }
-
-    //         // Nếu tồn tại các phòng chung trong tất cả các hashTable, thêm acc vào kết quả
-    //         if (isCommon) {
-    //             for (Room room : intersectionRooms) {
-    //                 result.add(acc);
-    //             }
-    //         }
-    //     }
-
-    //     return result;
-    // }
-
+    // Requirement 4
     public ArrayList<Accommodation> searchInAdvance(String city, Integer numOfPeople, String roomType,
             Boolean privatePool, Integer starQuality, Boolean freeBreakfast, Boolean privateBar) {
-        HashMap<Accommodation, ArrayList<Room>> filterList1 = new HashMap<>();
-        HashMap<Accommodation, ArrayList<Room>> filterList2 = new HashMap<>();
-        HashMap<Accommodation, ArrayList<Room>> filterList3 = new HashMap<>();
-        HashMap<Accommodation, ArrayList<Room>> filterList4 = new HashMap<>();
-        HashMap<Accommodation, ArrayList<Room>> filterList5 = new HashMap<>();
+        ArrayList<Accommodation> filterList1 = new ArrayList<>();
+        ArrayList<Accommodation> filterList2 = new ArrayList<>();
+        ArrayList<Accommodation> filterList3 = new ArrayList<>();
+        ArrayList<Accommodation> filterList4 = new ArrayList<>();
+        ArrayList<Accommodation> filterList5 = new ArrayList<>();
+        
 
         ArrayList<Boolean> checkArgumentNull = new ArrayList<>();
 
-        for (Accommodation a : accommodations) {
+        ArrayList<Accommodation> finalFilter = new ArrayList<>();
+
+        for(Accommodation a : accommodations){
             // check city
-            if (a.getCity_Accommodation().equals(city)) {
-                if (roomType != null) {
+            if(a.getCity_Accommodation().equals(city)){
+                if(roomType != null){
                     checkArgumentNull.add(false);
-                    if (a instanceof CommonAccommodation) {
-                        CommonAccommodation b = (CommonAccommodation) a;
-                        for (Room room : b.getRooms()) {
-                            if ((room.getGenre_Room().equals(roomType)) && (numOfPeople <= room.getMaximum_peoples_Room())) {
-                                if (filterList1.containsKey(a)) {
-                                    filterList1.get(a).add(room);
-                                } else {
-                                    ArrayList<Room> list = new ArrayList<>();
-                                    list.add(room);
-                                    filterList1.put(a, list);
-                                }
+                    if(a instanceof CommonAccommodation){
+                    CommonAccommodation b = (CommonAccommodation) a;
+                        for(Room room : b.getRooms()){
+                            if((room.getGenre_Room().equals(roomType)) && (numOfPeople <= room.getMaximum_peoples_Room())){
+                                filterList1.add(b);
                             }
                         }
                     }
-                } else {
+                }
+                else{
                     checkArgumentNull.add(true);
                 }
-                if (privatePool != null) {
+                if(privatePool != null){
                     // check luxury 
                     checkArgumentNull.add(false);
-                    if (a instanceof LuxuryAccommodation) {
+                    if(a instanceof LuxuryAccommodation){
                         LuxuryAccommodation b = (LuxuryAccommodation) a;
-                        if ((b.isIs_pool_available_LuxuryAccommodation() == privatePool) && (b.maximum_people_can_serve_LuxuryAccommodation >= numOfPeople)) {
-                            ArrayList<Room> list = new ArrayList<>();
-                            list.add(new Room(-1, "null", -1, "null", -1, -1, -1, -1));
-                            filterList2.put(a, list);
+                        if((b.isIs_pool_available_LuxuryAccommodation() == privatePool) && (b.maximum_people_can_serve_LuxuryAccommodation >= numOfPeople)){
+                            filterList2.add(b);
                         }
                     }
                     // check resort
-                    if (a instanceof Resort) {
+                    if(a instanceof Resort){
                         Resort b = (Resort) a;
-                        for (Room room : b.getRooms()) {
-                            if ((b.isIs_pool_available_Resort() == privatePool) && (room.getMaximum_peoples_Room() >= numOfPeople)) {
-                                if (filterList2.containsKey(a)) {
-                                    filterList2.get(a).add(room);
-                                } else {
-                                    ArrayList<Room> list = new ArrayList<>();
-                                    list.add(room);
-                                    filterList2.put(a, list);
-                                }
+                        for(Room room: b.getRooms()){
+                            if((b.isIs_pool_available_Resort() == privatePool) && (room.getMaximum_peoples_Room() >= numOfPeople)){
+                                filterList2.add(b);
                             }
                         }
                     }
-                } else {
+                }
+                else{
                     checkArgumentNull.add(true);
                 }
 
-                if (starQuality != null) {
+                if(starQuality != null){
                     checkArgumentNull.add(false);
-                    if (a instanceof Hotel) {
+                    if(a instanceof Hotel){
                         Hotel b = (Hotel) a;
-                        if ((b.getRating_stars_Hotel() == starQuality)) {
-                            for (Room room : b.getRooms()) {
-                                if (room.getMaximum_peoples_Room() >= numOfPeople) {
-                                    if (filterList3.containsKey(a)) {
-                                        filterList3.get(a).add(room);
-                                    } else {
-                                        ArrayList<Room> list = new ArrayList<>();
-                                        list.add(room);
-                                        filterList3.put(a, list);
-                                    }
+                        if((b.getRating_stars_Hotel() == starQuality) ){
+                            for(Room room : b.getRooms()){
+                                if(room.getMaximum_peoples_Room() >= numOfPeople){
+                                    filterList3.add(b);
                                 }
                             }
                         }
                     }
-                    if (a instanceof Resort) {
+                    if(a instanceof Resort){
                         Resort b = (Resort) a;
-                        if (b.getRating_stars_Resort() == starQuality) {
-                            for (Room room : b.getRooms()) {
-                                if (room.getMaximum_peoples_Room() >= numOfPeople) {
-                                    if (filterList3.containsKey(a)) {
-                                        filterList3.get(a).add(room);
-                                    } else {
-                                        ArrayList<Room> list = new ArrayList<>();
-                                        list.add(room);
-                                        filterList3.put(a, list);
-                                    }
+                        if(b.getRating_stars_Resort() == starQuality){
+                            for(Room room : b.getRooms()){
+                                if(room.getMaximum_peoples_Room() >= numOfPeople){
+                                    filterList3.add(b);
                                 }
                             }
                         }
                     }
-                } else {
+                }
+                else{
                     checkArgumentNull.add(true);
                 }
 
-                if (freeBreakfast != null) {
+                if(freeBreakfast != null){
                     checkArgumentNull.add(false);
-                    if (a instanceof LuxuryAccommodation) {
+                    if(a instanceof LuxuryAccommodation){
                         LuxuryAccommodation b = (LuxuryAccommodation) a;
-                        if ((b.isIs_free_breakfast_LuxuryAccommodation() == freeBreakfast) && (b.maximum_people_can_serve_LuxuryAccommodation >= numOfPeople)) {
-                            ArrayList<Room> list = new ArrayList<>();
-                            list.add(new Room(-1, "null", -1, "null", -1, -1, -1, -1));
-                            filterList4.put(a, list);
+                        if((b.isIs_free_breakfast_LuxuryAccommodation() == freeBreakfast) && (b.maximum_people_can_serve_LuxuryAccommodation >= numOfPeople)){
+                            filterList4.add(b);
                         }
                     }
-                } else {
+                }
+                else{
                     checkArgumentNull.add(true);
                 }
 
-                if (privateBar != null) {
+                if(privateBar != null){
                     checkArgumentNull.add(false);
-                    if (a instanceof CruiseShip) {
+                    if(a instanceof CruiseShip){
                         LuxuryAccommodation b = (LuxuryAccommodation) a;
-                        if (b.getMaximum_people_can_serve_LuxuryAccommodation() >= numOfPeople) {
+                        if(b.getMaximum_people_can_serve_LuxuryAccommodation() >= numOfPeople){
                             CruiseShip c = (CruiseShip) b;
-                            if (c.isIs_private_bar_CruiseShip() == privateBar) {
-                                ArrayList<Room> list = new ArrayList<>();
-                                list.add(new Room(-1, "null", -1, "null", -1, -1, -1, -1));
-                                filterList5.put(a, list);
+                            if(c.isIs_private_bar_CruiseShip() == privateBar){
+                                filterList5.add(c);
                             }
                         }
                     }
-                } else {
+                }
+                else{
                     checkArgumentNull.add(true);
                 }
             }
         }
+        
 
-        ArrayList<HashMap<Accommodation, ArrayList<Room>>> nonNullLists = new ArrayList<>();
+        ArrayList<ArrayList<Accommodation>> nonNullLists = new ArrayList<>();
 
         for (int i = 0; i < checkArgumentNull.size(); i++) {
             if (!checkArgumentNull.get(i)) {
@@ -794,40 +417,219 @@ public class ReservationSystem {
             }
         }
 
-        HashMap<Accommodation, ArrayList<Room>> commonAccommodationsSet = new HashMap<>();
+        ArrayList<Accommodation> commonAccommodationsSet = new ArrayList<>();
 
         if (!nonNullLists.isEmpty()) {
-            commonAccommodationsSet.putAll(nonNullLists.get(0));
+            commonAccommodationsSet.addAll(nonNullLists.get(0));
         }
 
         for (int i = 1; i < nonNullLists.size(); i++) {
-            HashMap<Accommodation, ArrayList<Room>> currentTable = nonNullLists.get(i);
-            for (Accommodation acc : commonAccommodationsSet.keySet()) {
-                ArrayList<Room> baseRooms = commonAccommodationsSet.get(acc);
-                ArrayList<Room> currentRooms = currentTable.get(acc);
-                if (currentRooms == null) {
-                    commonAccommodationsSet.remove(acc);
-                    continue;
-                }
-
-                baseRooms.retainAll(currentRooms);
-                if (baseRooms.isEmpty()) {
-                    commonAccommodationsSet.remove(acc);
-                }
-            }
+            commonAccommodationsSet.retainAll(nonNullLists.get(i));
         }
-
-        ArrayList<Accommodation> finalFilter = new ArrayList<>();
-
-        for (Accommodation acc : commonAccommodationsSet.keySet()) {
-            ArrayList<Room> rooms = commonAccommodationsSet.get(acc);
-            for (Room room : rooms) {
-                finalFilter.add(acc);
-            }
-        }
-
+        
+        finalFilter.addAll(commonAccommodationsSet);
         return finalFilter;
     }
+
+
+    // public ArrayList<Accommodation> searchInAdvance(String city, Integer numOfPeople, String roomType,
+    //         Boolean privatePool, Integer starQuality, Boolean freeBreakfast, Boolean privateBar) {
+    //     HashMap<Accommodation, ArrayList<Room>> filterList1 = new HashMap<>();
+    //     HashMap<Accommodation, ArrayList<Room>> filterList2 = new HashMap<>();
+    //     HashMap<Accommodation, ArrayList<Room>> filterList3 = new HashMap<>();
+    //     HashMap<Accommodation, ArrayList<Room>> filterList4 = new HashMap<>();
+    //     HashMap<Accommodation, ArrayList<Room>> filterList5 = new HashMap<>();
+
+    //     ArrayList<Boolean> checkArgumentNull = new ArrayList<>();
+
+    //     for (Accommodation a : accommodations) {
+    //         // check city
+    //         if (a.getCity_Accommodation().equals(city)) {
+    //             if (roomType != null) {
+    //                 checkArgumentNull.add(false);
+    //                 if (a instanceof CommonAccommodation) {
+    //                     CommonAccommodation b = (CommonAccommodation) a;
+    //                     for (Room room : b.getRooms()) {
+    //                         if ((room.getGenre_Room().equals(roomType)) && (numOfPeople <= room.getMaximum_peoples_Room())) {
+    //                             if (filterList1.containsKey(a)) {
+    //                                 filterList1.get(a).add(room);
+    //                             } else {
+    //                                 ArrayList<Room> list = new ArrayList<>();
+    //                                 list.add(room);
+    //                                 filterList1.put(a, list);
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             } else {
+    //                 checkArgumentNull.add(true);
+    //             }
+    //             if (privatePool != null) {
+    //                 // check luxury 
+    //                 checkArgumentNull.add(false);
+    //                 if (a instanceof LuxuryAccommodation) {
+    //                     LuxuryAccommodation b = (LuxuryAccommodation) a;
+    //                     if ((b.isIs_pool_available_LuxuryAccommodation() == privatePool) && (b.maximum_people_can_serve_LuxuryAccommodation >= numOfPeople)) {
+    //                         ArrayList<Room> list = new ArrayList<>();
+    //                         list.add(new Room(-1, "null", -1, "null", -1, -1, -1, -1));
+    //                         filterList2.put(a, list);
+    //                     }
+    //                 }
+    //                 // check resort
+    //                 if (a instanceof Resort) {
+    //                     Resort b = (Resort) a;
+    //                     for (Room room : b.getRooms()) {
+    //                         if ((b.isIs_pool_available_Resort() == privatePool) && (room.getMaximum_peoples_Room() >= numOfPeople)) {
+    //                             if (filterList2.containsKey(a)) {
+    //                                 filterList2.get(a).add(room);
+    //                             } else {
+    //                                 ArrayList<Room> list = new ArrayList<>();
+    //                                 list.add(room);
+    //                                 filterList2.put(a, list);
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             } else {
+    //                 checkArgumentNull.add(true);
+    //             }
+
+    //             if (starQuality != null) {
+    //                 checkArgumentNull.add(false);
+    //                 if (a instanceof Hotel) {
+    //                     Hotel b = (Hotel) a;
+    //                     if ((b.getRating_stars_Hotel() == starQuality)) {
+    //                         for (Room room : b.getRooms()) {
+    //                             if (room.getMaximum_peoples_Room() >= numOfPeople) {
+    //                                 if (filterList3.containsKey(a)) {
+    //                                     filterList3.get(a).add(room);
+    //                                 } else {
+    //                                     ArrayList<Room> list = new ArrayList<>();
+    //                                     list.add(room);
+    //                                     filterList3.put(a, list);
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //                 if (a instanceof Resort) {
+    //                     Resort b = (Resort) a;
+    //                     if (b.getRating_stars_Resort() == starQuality) {
+    //                         for (Room room : b.getRooms()) {
+    //                             if (room.getMaximum_peoples_Room() >= numOfPeople) {
+    //                                 if (filterList3.containsKey(a)) {
+    //                                     filterList3.get(a).add(room);
+    //                                 } else {
+    //                                     ArrayList<Room> list = new ArrayList<>();
+    //                                     list.add(room);
+    //                                     filterList3.put(a, list);
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             } else {
+    //                 checkArgumentNull.add(true);
+    //             }
+
+    //             if (freeBreakfast != null) {
+    //                 checkArgumentNull.add(false);
+    //                 if (a instanceof LuxuryAccommodation) {
+    //                     LuxuryAccommodation b = (LuxuryAccommodation) a;
+    //                     if ((b.isIs_free_breakfast_LuxuryAccommodation() == freeBreakfast) && (b.maximum_people_can_serve_LuxuryAccommodation >= numOfPeople)) {
+    //                         ArrayList<Room> list = new ArrayList<>();
+    //                         list.add(new Room(-1, "null", -1, "null", -1, -1, -1, -1));
+    //                         filterList4.put(a, list);
+    //                     }
+    //                 }
+    //             } else {
+    //                 checkArgumentNull.add(true);
+    //             }
+
+    //             if (privateBar != null) {
+    //                 checkArgumentNull.add(false);
+    //                 if (a instanceof CruiseShip) {
+    //                     LuxuryAccommodation b = (LuxuryAccommodation) a;
+    //                     if (b.getMaximum_people_can_serve_LuxuryAccommodation() >= numOfPeople) {
+    //                         CruiseShip c = (CruiseShip) b;
+    //                         if (c.isIs_private_bar_CruiseShip() == privateBar) {
+    //                             ArrayList<Room> list = new ArrayList<>();
+    //                             list.add(new Room(-1, "null", -1, "null", -1, -1, -1, -1));
+    //                             filterList5.put(a, list);
+    //                         }
+    //                     }
+    //                 }
+    //             } else {
+    //                 checkArgumentNull.add(true);
+    //             }
+    //         }
+    //     }
+
+    //     ArrayList<HashMap<Accommodation, ArrayList<Room>>> nonNullLists = new ArrayList<>();
+
+        
+    //     for (int i = 0; i < checkArgumentNull.size(); i++) {
+    //         if (!checkArgumentNull.get(i)) {
+    //             switch (i) {
+    //                 case 0:
+    //                     nonNullLists.add(filterList1);
+    //                     break;
+    //                 case 1:
+    //                     nonNullLists.add(filterList2);
+    //                     break;
+    //                 case 2:
+    //                     nonNullLists.add(filterList3);
+    //                     break;
+    //                 case 3:
+    //                     nonNullLists.add(filterList4);
+    //                     break;
+    //                 case 4:
+    //                     nonNullLists.add(filterList5);
+    //                     break;
+    //             }
+    //         }
+    //     }
+
+    //     HashMap<Accommodation, ArrayList<Room>> commonAccommodationsSet = new HashMap<>();
+        
+    //     if (!nonNullLists.isEmpty()) {
+    //         commonAccommodationsSet.putAll(nonNullLists.get(0));
+    //     }
+
+
+    //     for (int i = 1; i < nonNullLists.size(); i++) {
+    //         HashMap<Accommodation, ArrayList<Room>> currentTable = nonNullLists.get(i);
+    //         for (Accommodation acc : new HashSet<>(commonAccommodationsSet.keySet())) { // create a copy of the keySet to avoid ConcurrentModificationException
+    //             ArrayList<Room> baseRooms = commonAccommodationsSet.get(acc);
+    //             boolean keyExists = false;
+    //             for (Accommodation currentAcc : currentTable.keySet()) {
+    //                 if (currentAcc.getID_Accommodation() == (acc.getID_Accommodation())) { // compare IDAccommodation
+    //                     keyExists = true;
+    //                     ArrayList<Room> currentRooms = currentTable.get(currentAcc);
+    //                     baseRooms.retainAll(currentRooms);
+    //                     if (baseRooms.isEmpty()) {
+    //                         commonAccommodationsSet.remove(acc);
+    //                     }
+    //                     break;
+    //                 }
+    //             }
+    //             if (!keyExists) {
+    //                 commonAccommodationsSet.remove(acc);
+    //             }
+    //         }
+    //     }
+
+    //     ArrayList<Accommodation> finalFilter = new ArrayList<>();
+
+    //     for (Accommodation acc : commonAccommodationsSet.keySet()) {
+    //         ArrayList<Room> rooms = commonAccommodationsSet.get(acc);
+    //         for (Room room : rooms) {
+    //             finalFilter.add(acc);
+    //         }
+    //     }
+
+    //     return finalFilter;
+    // }
 
 
     // Requirement 5
