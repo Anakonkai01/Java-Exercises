@@ -599,11 +599,11 @@ public class ReservationSystem {
 
     //     for (int i = 1; i < nonNullLists.size(); i++) {
     //         HashMap<Accommodation, ArrayList<Room>> currentTable = nonNullLists.get(i);
-    //         for (Accommodation acc : new HashSet<>(commonAccommodationsSet.keySet())) { // create a copy of the keySet to avoid ConcurrentModificationException
+    //         for (Accommodation acc : new HashSet<>(commonAccommodationsSet.keySet())) { 
     //             ArrayList<Room> baseRooms = commonAccommodationsSet.get(acc);
     //             boolean keyExists = false;
     //             for (Accommodation currentAcc : currentTable.keySet()) {
-    //                 if (currentAcc.getID_Accommodation() == (acc.getID_Accommodation())) { // compare IDAccommodation
+    //                 if (currentAcc.getID_Accommodation() == (acc.getID_Accommodation())) { 
     //                     keyExists = true;
     //                     ArrayList<Room> currentRooms = currentTable.get(currentAcc);
     //                     baseRooms.retainAll(currentRooms);
