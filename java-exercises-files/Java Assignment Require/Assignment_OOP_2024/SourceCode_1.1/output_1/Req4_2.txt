@@ -1,0 +1,1 @@
+Resort [3, Beach Resort, 4, 789 Ocean Ave, true, City C]
