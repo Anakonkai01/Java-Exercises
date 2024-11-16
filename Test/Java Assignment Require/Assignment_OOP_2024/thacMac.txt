@@ -1,0 +1,32 @@
+
+
+Ma dinh danh la duy nhat phai ko ????????????????
+mấy cái date thầy truyền đi đều chưa * 1000 vậy nó vẫn là giây ????
+
+# req1
+
+
+
+#req2 
+
+
+#req3:
+-dữ liệu time trong hàm main đã * 1000 chưa ??? (+1 mail cho thay dung cam quang)
+số lượng người tối 
+đa lớn hơn không quá 2 hoặc bằng so với số lượng người numOfPeople truyền vào từ tham số (+1 mail) => anh Thai da lam sang to
+  
+
+#req4
+-Trường hợp có trên 02 thông tin khác city và numOfPeople cần lọc mà không có loại hình dịch vụ nào
+-có cần in theo bảng chữ cái alphabet
+
+#req5:
+-lỡ chẳng hạn như trong Data reservation_5 dư 1 hàng trống, thì nếu nó xuống dòng thì thành ra như thế này à
+    vd : 
+    19,7,19,1660000000,1660200000
+    20,7,20,1660300000,1660500000
+
+    21,1,1,1713368812,1713398812
+-nhu vay in ra lai 1 file reservation_5 trong file output cua minh chu ko phai file data sao
+-có cần in theo bảng chữ cái alphabet
+
