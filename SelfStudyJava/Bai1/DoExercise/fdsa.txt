@@ -1,2 +1,0 @@
-ITStudent{Name = Nhan - sID = '12345' - Gpa= 9.37}
-MathStudent{Name = Thai - sID = '523H0132' - Gpa= 6.7}

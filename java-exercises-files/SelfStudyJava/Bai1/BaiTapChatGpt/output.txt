@@ -1,1 +1,0 @@
-{tu=1, world=1, dung=1, chieu=1, em=1, anh=1, hello=1, chao=1, day=1}
